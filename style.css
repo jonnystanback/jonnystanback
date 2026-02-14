@@ -1,0 +1,380 @@
+/* Jonny Stanback Website */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Neo Contact D';
+  src: url('Neo-Contact-D.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --red: #FF3939;
+  --cream: #DECDB8;
+  --black: #000000;
+  --white: #FFFFFF;
+}
+
+body {
+  font-family: 'Arial Narrow', Arial, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ==================== HOME PAGE ==================== */
+body.home {
+  background: var(--black);
+}
+
+/* Video Background */
+.video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.video-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: -1;
+}
+
+/* Header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem 2rem;
+  z-index: 100;
+}
+
+.logo img {
+  height: 60px;
+  width: auto;
+}
+
+nav {
+  display: flex;
+  gap: 2.5rem;
+}
+
+nav a {
+  color: var(--red);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  transition: opacity 0.3s ease;
+}
+
+nav a:hover {
+  opacity: 0.7;
+}
+
+/* Hero Section */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 18vh;
+}
+
+.hero-content {
+  text-align: center;
+}
+
+.text-banner {
+  max-width: 500px;
+  width: 90%;
+  height: auto;
+}
+
+/* ==================== INNER PAGES ==================== */
+body.inner-page {
+  background: var(--cream);
+  min-height: 100vh;
+}
+
+body.inner-page header {
+  position: relative;
+  background: transparent;
+}
+
+body.inner-page .logo img {
+  filter: none;
+}
+
+body.inner-page nav a {
+  color: var(--red);
+}
+
+/* Page Content */
+.page-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-title {
+  font-family: 'Neo Contact D', 'Arial Narrow', Arial, sans-serif;
+  color: var(--red);
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  letter-spacing: 4px;
+  font-weight: normal;
+}
+
+/* ==================== TOUR PAGE ==================== */
+.tour-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tour-item {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+}
+
+.tour-date {
+  color: var(--red);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.tour-venue {
+  color: var(--black);
+}
+
+.tour-venue h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.tour-venue p {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.tour-btn {
+  background: var(--red);
+  color: var(--white);
+  padding: 0.6rem 1.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+  transition: opacity 0.3s ease;
+}
+
+.tour-btn:hover {
+  opacity: 0.8;
+}
+
+.no-dates {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--black);
+  font-size: 1.2rem;
+}
+
+.no-dates p {
+  margin-bottom: 1rem;
+}
+
+.notify-btn {
+  display: inline-block;
+  background: var(--red);
+  color: var(--white);
+  padding: 0.8rem 2rem;
+  text-decoration: none;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  transition: opacity 0.3s ease;
+}
+
+.notify-btn:hover {
+  opacity: 0.8;
+}
+
+/* ==================== MUSIC PAGE ==================== */
+.music-section {
+  margin-bottom: 3rem;
+}
+
+.music-section h2 {
+  color: var(--red);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: 2px;
+}
+
+.spotify-embeds {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.spotify-embed {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.streaming-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.streaming-link {
+  background: var(--red);
+  color: var(--white);
+  padding: 0.8rem 1.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+  transition: opacity 0.3s ease;
+}
+
+.streaming-link:hover {
+  opacity: 0.8;
+}
+
+/* ==================== MERCH PAGE ==================== */
+.merch-coming-soon {
+  text-align: center;
+  padding: 6rem 2rem;
+}
+
+.merch-coming-soon h2 {
+  color: var(--red);
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 3px;
+}
+
+.merch-coming-soon p {
+  color: var(--black);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.merch-notify-btn {
+  display: inline-block;
+  background: var(--red);
+  color: var(--white);
+  padding: 1rem 2.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 1rem;
+  transition: opacity 0.3s ease;
+}
+
+.merch-notify-btn:hover {
+  opacity: 0.8;
+}
+
+/* Shopify embed container (for future integration) */
+.shopify-collection {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+/* ==================== FOOTER ==================== */
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--black);
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+body.home footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: var(--white);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  header {
+    padding: 1rem;
+  }
+
+  .logo img {
+    height: 45px;
+  }
+
+  nav {
+    gap: 1.5rem;
+  }
+
+  nav a {
+    font-size: 0.75rem;
+  }
+
+  .text-banner {
+    max-width: 350px;
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .tour-item {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  nav {
+    gap: 1rem;
+  }
+
+  nav a {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+  }
+
+  .logo img {
+    height: 35px;
+  }
+
+  .text-banner {
+    max-width: 280px;
+  }
+}
