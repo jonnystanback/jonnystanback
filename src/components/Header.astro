@@ -1,0 +1,18 @@
+---
+// Site header + nav. Add new sections (e.g. IN THE FIELD) here once.
+const links = [
+  { href: '/tour', label: 'TOUR' },
+  { href: '/music', label: 'MUSIC' },
+  { href: '/merch', label: 'MERCH' },
+];
+---
+<header>
+  <div class="logo">
+    <a href="/">
+      <img src="/horse.png" alt="Jonny Stanback">
+    </a>
+  </div>
+  <nav>
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+  </nav>
+</header>

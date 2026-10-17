@@ -1,0 +1,51 @@
+---
+// Shared page shell: <head>, social preview tags, header.
+// Every page uses this, so the nav and meta tags live in one place.
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;          // page name, e.g. "Music"
+  description?: string;
+  bodyClass?: 'home' | 'inner-page';
+  footer?: boolean;
+}
+
+const {
+  title,
+  description = 'Official website of Jonny Stanback',
+  bodyClass = 'inner-page',
+  footer = true,
+} = Astro.props;
+
+const fullTitle = title ? `${title} - Jonny Stanback` : 'Jonny Stanback';
+const socialImage = new URL('/social.png', Astro.site).href;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{fullTitle}</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <!-- Social Preview -->
+  <meta property="og:title" content={fullTitle}>
+  <meta property="og:description" content={description}>
+  <meta property="og:image" content={socialImage}>
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={fullTitle}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={socialImage}>
+
+  <link rel="stylesheet" href="/style.css">
+  <slot name="head" />
+</head>
+<body class={bodyClass}>
+  <slot name="before-header" />
+  <Header />
+  <slot />
+  {footer && <Footer />}
+</body>
+</html>

@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base bodyClass="home" footer={false}>
+  <Fragment slot="before-header">
+    <!-- Background Video -->
+    <video autoplay muted loop playsinline class="video-bg">
+      <source src="/jonnyvideo.mp4" type="video/mp4">
+    </video>
+    <!-- Overlay for slight darkening -->
+    <div class="video-overlay"></div>
+  </Fragment>
+
+  <!-- Main Content -->
+  <main class="hero">
+    <div class="hero-content">
+      <a href="https://open.spotify.com/track/3JmNDTL4QLLXhffheGEugh?si=e4da7c05b2924ecf" target="_blank">
+        <img src="/textbanner.png" alt="Jonny Stanback" class="text-banner">
+      </a>
+    </div>
+  </main>
+</Base>
