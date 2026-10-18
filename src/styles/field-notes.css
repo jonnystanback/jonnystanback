@@ -36,7 +36,11 @@ body.field-notes {
   --fn-s3: clamp(3rem, 6vw, 4.5rem);
   --fn-s4: clamp(4rem, 9vw, 7rem);
 
-  background: var(--fn-paper);
+  --fn-paper-texture: url('/field-notes/paper.webp');
+
+  background: var(--fn-paper) var(--fn-paper-texture) repeat;
+  background-size: 640px;
+  background-blend-mode: multiply;
   color: var(--fn-ink);
   font-family: var(--fn-type);
   -webkit-font-smoothing: antialiased;
@@ -65,7 +69,10 @@ body.field-notes {
 .fn-sheet {
   position: relative;
   z-index: 1;
-  background: var(--fn-paper);
+  /* paper: cream with a faint grain and a few fibers */
+  background: var(--fn-paper) var(--fn-paper-texture) repeat;
+  background-size: 640px;
+  background-blend-mode: multiply;
   overflow-x: clip;   /* trims images that run off the page edges */
 }
 
@@ -387,7 +394,7 @@ figcaption {
 .fn-subscribe__button:hover { background: #fff; }
 .fn-subscribe .fn-subscribe__small { margin: 1.4rem auto 0; font-size: 0.8rem; opacity: 0.85; }
 
-body.field-notes footer { color: var(--fn-ink); position: relative; z-index: 1; background: var(--fn-paper); }
+body.field-notes footer { color: var(--fn-ink); position: relative; z-index: 1; background: inherit; }
 
 /* ---------- In The Field index ---------- */
 .fn-index {
