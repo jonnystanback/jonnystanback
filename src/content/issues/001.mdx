@@ -11,12 +11,15 @@ import Figure from '../../components/field-notes/Figure.astro';
 import VoiceMemos from '../../components/field-notes/VoiceMemos.astro';
 import Demo from '../../components/field-notes/Demo.astro';
 import Signoff from '../../components/field-notes/Signoff.astro';
-import PullQuote from '../../components/field-notes/PullQuote.astro';
+import MarginNote from '../../components/field-notes/MarginNote.astro';
 import PhotoPair from '../../components/field-notes/PhotoPair.astro';
 import checklist from '../../assets/field-notes/001/checklist.jpg';
 import studio from '../../assets/field-notes/001/studio.jpg';
 import fieldGuitar from '../../assets/field-notes/001/field-guitar.jpg';
 import mic from '../../assets/field-notes/001/mic.jpg';
+import noteReaching from '../../assets/field-notes/001/note-reaching.png';
+import noteCraft from '../../assets/field-notes/001/note-craft.png';
+import horse from '../../assets/field-notes/001/horse.png';
 
 It’s starting to cool off in Santa Barbara.
 
@@ -75,7 +78,7 @@ Which is why I’m starting Field Notes.
 
 It’s a space for those who have connected with my music. Somewhere I can share things that don’t fit neatly into a social media post.
 
-<PullQuote text="Reaching people and connecting with them aren’t always the same thing." />
+<MarginNote src={noteReaching} side="right" alt="Handwritten in red: Reaching people and connecting with them aren’t always the same thing." />
 
 There’s another reason I want to do this, too.
 
@@ -97,12 +100,16 @@ Hopefully, this can be a two-way conversation. I’d love to hear from you.
 
 We can talk about the art of crafting things that matter. Or the weather.
 
+<MarginNote src={noteCraft} side="left" alt="Handwritten in red: How do you craft things that matter??" />
+
 I’ll send a new letter once a month.
 
 <Figure
   src={fieldGuitar}
   alt="Jonny playing a vintage acoustic guitar in a green backyard, framed by a tree trunk."
 />
+
+<MarginNote src={horse} kind="doodle" alt="A small red drawing of a horse with stars." />
 
 And finally, thank you for being here.
 

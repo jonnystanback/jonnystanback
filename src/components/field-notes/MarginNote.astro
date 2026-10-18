@@ -1,0 +1,19 @@
+---
+// A handwritten note or doodle (transparent PNG) set beside the writing.
+// kind="note": a line of handwriting that hangs out into the left or right margin.
+// kind="doodle": a small drawing pinned in the left margin.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  side?: 'left' | 'right';
+  kind?: 'note' | 'doodle';
+}
+const { src, alt, side = 'right', kind = 'note' } = Astro.props;
+const cls = kind === 'doodle' ? 'fn-doodle' : `fn-note fn-note--${side}`;
+---
+<figure class={cls}>
+  <Image src={src} alt={alt} widths={kind === 'doodle' ? [200, 400] : [500, 800, 1200]} sizes={kind === 'doodle' ? '8rem' : '(min-width: 640px) 30rem, 92vw'} />
+</figure>

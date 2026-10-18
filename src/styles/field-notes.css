@@ -83,7 +83,7 @@ body.field-notes {
   position: absolute;
   /* overlaps the sheet a few px so no seam can show between them */
   bottom: calc(100% - 4px);
-  left: max(calc(var(--fn-gutter) + var(--fn-tab-r)), calc(50% - (var(--fn-text) + var(--fn-gap) + var(--fn-mw)) / 2 + var(--fn-tab-r)));
+  left: calc(var(--fn-gutter) + var(--fn-tab-r));
   min-width: 17rem;
   height: calc(var(--fn-tab-h) + 4px);
   padding: 0 2.25rem 4px;
@@ -94,10 +94,11 @@ body.field-notes {
   background-size: 900px auto;
   background-blend-mode: multiply;
   border-radius: var(--fn-tab-r) var(--fn-tab-r) 0 0;
-  font-family: var(--fn-type);
-  font-size: 1.05rem;
-  letter-spacing: 0.14em;
-  color: var(--fn-ink);
+  /* date written on the tab in red marker */
+  font-family: 'Covered By Your Grace', var(--fn-type);
+  font-size: 2.6rem;
+  letter-spacing: 0.04em;
+  color: #C8281E;
   line-height: 1;
 }
 /* the soft inward curves where the tab meets the folder */
@@ -145,10 +146,16 @@ body.field-notes {
 }
 .fn-body figcaption,
 .fn-body .fn-demo,
-.fn-body .fn-pull,
 .fn-title { -webkit-text-stroke: 0; }
 
 .fn-body p { margin: 0 0 1.1em; }
+/* justified letter text; hyphenation keeps the word gaps even */
+.fn-body > p {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphenate-limit-chars: 7 3 3;
+}
 
 .fn-title {
   font-family: var(--fn-display);
@@ -158,7 +165,7 @@ body.field-notes {
   line-height: 1;
   letter-spacing: 0.01em;
   text-transform: uppercase;
-  text-align: left;
+  text-align: center;
   margin: 0 0 var(--fn-s2);
 }
 
@@ -181,7 +188,7 @@ figcaption {
 }
 
 /* ---------- Typed details inside the letter ---------- */
-.fn-memos { list-style: none; padding: 0; margin: 0 0 1.1em; }
+.fn-memos { list-style: none; padding: 0; margin: 0 0 1.1em; text-align: center; }
 .fn-memos li { margin: 0; }
 .fn-memos__date { white-space: nowrap; }
 
@@ -190,20 +197,12 @@ figcaption {
 .fn-artifact__paper { background: var(--fn-card); }
 .fn-artifact img { display: block; width: 100%; height: auto; }
 
-/* ---------- Pull quote ---------- */
-.fn-pull {
-  margin: var(--fn-s2) 0;
-  padding: 1rem 0 1.1rem;
-  border-top: 1px solid var(--fn-red);
-  border-bottom: 1px solid var(--fn-red);
-}
-.fn-pull p {
-  margin: 0;
-  font-family: var(--fn-display);
-  color: var(--fn-red);
-  font-size: 1.85rem;
-  line-height: 1.08;
-}
+/* ---------- Handwritten notes and doodles ---------- */
+.fn-note { margin: 0.6rem 0 1.8rem; width: min(30rem, 92%); }
+.fn-note img, .fn-doodle img { display: block; width: 100%; height: auto; }
+.fn-note--right { margin-left: auto; }
+.fn-note--left { margin-right: auto; }
+.fn-doodle { width: 6.5rem; margin: 0.5rem auto 1.5rem; }
 
 /* ---------- Demo player ---------- */
 .fn-demo { margin: var(--fn-s2) 0; }
@@ -316,72 +315,66 @@ figcaption {
 .fn-wide img { display: block; width: 100%; height: auto; }
 
 /* ---------- Sign-off ---------- */
-.fn-signoff { margin-top: var(--fn-s2); }
+.fn-signoff { margin-top: var(--fn-s2); text-align: center; }
 .fn-signoff p { margin-bottom: 0.5rem; }
-.fn-signoff__sig { display: block; width: 190px; max-width: 55%; height: auto; }
+.fn-signoff__sig { display: block; width: 190px; max-width: 55%; height: auto; margin-inline: auto; }
 
 /* ==========================================================================
-   Wide screens: column on the left, margin on the right
+   Wide screens: a wide centered column, with margins on both sides for
+   things pinned beside the writing (notebook page, handwritten notes)
    ========================================================================== */
-@media (min-width: 1100px) {
-  body.field-notes { --fn-art: clamp(22rem, 28vw, 34rem); }
-
-  .fn-body {
-    width: min(100% - 2 * var(--fn-gutter), var(--fn-text) + var(--fn-gap) + var(--fn-mw));
-    font-size: 1.25rem;
-  }
-  .fn-body > p,
-  .fn-body > .fn-memos,
-  .fn-body > .fn-signoff,
-  .fn-title { max-width: var(--fn-text); }
-
-  /* things pinned in the margin */
-  .fn-pull {
-    float: right;
-    clear: right;
-    width: var(--fn-mw);
-    margin: 0.3rem 0 var(--fn-s2) var(--fn-gap);
+@media (min-width: 1200px) {
+  body.field-notes {
+    --fn-text: 46rem;
+    --fn-art: clamp(22rem, 28vw, 34rem);
+    /* room between the column and the window edge */
+    --fn-side: calc((100vw - var(--fn-text)) / 2 - var(--fn-gutter));
   }
 
-  .fn-pair { width: calc(100% - 3rem); }
+  .fn-body { font-size: 1.25rem; }
 
-  /* notebook page: in the margin, running ~35% past the window edge */
+  /* notebook page: right margin, running ~35% past the window edge */
   .fn-artifact {
     float: right;
     clear: right;
     width: var(--fn-art);
     /* pulled up so it sits beside the opening lines */
-    margin: -21rem calc((100% - 100vw) / 2 - 0.35 * var(--fn-art)) var(--fn-s2) var(--fn-gap);
+    margin: -21rem calc((100% - 100vw) / 2 - 0.35 * var(--fn-art)) var(--fn-s2) 2.5rem;
   }
   .fn-artifact figcaption { max-width: calc(0.65 * var(--fn-art) - 1rem); }
 
-  /* player: starts on the column's left edge, runs a little past its right */
+  /* handwritten notes hang out into the margins */
+  .fn-note--right { margin-right: calc(-1 * min(15rem, var(--fn-side) - 1.5rem)); }
+  .fn-note--left { margin-left: calc(-1 * min(15rem, var(--fn-side) - 1.5rem)); }
+
+  /* small drawing pinned in the left margin */
+  .fn-doodle {
+    float: left;
+    clear: left;
+    width: 8rem;
+    margin: 0.2rem 0 1rem calc(-1 * min(12rem, var(--fn-side) - 1rem));
+  }
+
+  /* player, photo pair and wide photo: centered on the column */
   .fn-body > .fn-demo {
     width: calc(var(--fn-text) + 6rem);
-    margin-left: 0;
+    margin-left: -3rem;
   }
-
-  /* studio photo: from the window's left edge into the column; caption sits in the margin */
-  .fn-break-left {
-    display: grid;
-    grid-template-columns: calc((100vw - 100%) / 2 + var(--fn-text) - 6rem) 1fr;
-    column-gap: var(--fn-gap);
-    align-items: end;
-    margin-left: calc((100% - 100vw) / 2);
-    margin-right: 0;
+  .fn-pair {
+    width: min(58rem, 100vw - 2 * var(--fn-gutter));
+    margin-left: calc((var(--fn-text) - min(58rem, 100vw - 2 * var(--fn-gutter))) / 2);
   }
-  .fn-break-left figcaption { margin: 0; max-width: 14rem; }
-
-  /* guitar photo: spans column and margin */
-  .fn-wide { width: 100%; }
+  .fn-wide {
+    width: min(62rem, 100vw - 2 * var(--fn-gutter));
+    margin-left: calc((var(--fn-text) - min(62rem, 100vw - 2 * var(--fn-gutter))) / 2);
+  }
 }
 
 /* ==========================================================================
    Tablets and phones: one column; margin items sit inline
    ========================================================================== */
-@media (max-width: 1099px) {
+@media (max-width: 1199px) {
   .fn-body { width: min(100% - 2 * var(--fn-gutter), 40rem); }
-  .fn-tab { left: max(calc(var(--fn-gutter) + var(--fn-tab-r)), calc(50% - 20rem + var(--fn-tab-r))); }
   .fn-artifact {
     width: min(82%, 24rem);
     margin: var(--fn-s1) calc(-1 * var(--fn-gutter) - 6%) var(--fn-s2) auto;
@@ -390,14 +383,15 @@ figcaption {
   .fn-wide { margin-inline: calc(-1 * var(--fn-gutter)); }
   .fn-break-left figcaption,
   .fn-wide figcaption { padding-inline: var(--fn-gutter); }
-  .fn-pull p { font-size: 1.7rem; }
   .fn-pair { margin-inline: calc(-0.5 * var(--fn-gutter)); }
 }
 
 @media (max-width: 640px) {
+  /* a narrow monospace column justifies with big holes, so phones stay ragged */
+  .fn-body > p { text-align: left; hyphens: manual; -webkit-hyphens: manual; }
   .fn-body { font-size: 1.0625rem; line-height: 1.5; }
   .fn-sheet { --fn-tab-h: 2.6rem; --fn-tab-r: 12px; }
-  .fn-tab { min-width: 11rem; padding: 0 1.5rem 4px; font-size: 0.9rem; }
+  .fn-tab { min-width: 11rem; padding: 0 1.5rem 4px; font-size: 2rem; }
   .fn-dateline { font-size: 0.7rem; }
   .fn-demo__bar { grid-template-columns: auto 1fr; column-gap: 1rem; row-gap: 0.9rem; padding: 1rem 1.1rem; }
   .fn-demo__title { font-size: 0.92rem; white-space: normal; }
