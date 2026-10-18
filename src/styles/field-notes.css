@@ -90,6 +90,7 @@ body.field-notes {
   padding: 0 2.25rem 4px;
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: var(--fn-paper);
   background-image: var(--fn-paper-texture);
   background-size: 900px auto;
@@ -131,7 +132,7 @@ body.field-notes {
   gap: 1rem;
   padding: 1.25rem var(--fn-gutter);
   font-family: var(--fn-letter);
-  font-size: 1.125rem;
+  font-size: 1.07rem;
   text-transform: uppercase;
   color: #13100C;
   -webkit-text-stroke: 0.2px currentColor;
@@ -338,7 +339,8 @@ figcaption {
     --fn-side: calc((100vw - var(--fn-text)) / 2 - var(--fn-gutter));
   }
 
-  .fn-body, .fn-dateline { font-size: 1.25rem; }
+  .fn-body { font-size: 1.25rem; }
+  .fn-dateline { font-size: 1.19rem; }
 
   /* notebook page: right margin, running ~35% past the window edge */
   .fn-artifact {
@@ -373,6 +375,7 @@ figcaption {
   .fn-note--right img { right: calc(-1 * (var(--fn-side) - 1rem)); }
   .fn-note--left img { left: calc(-1 * (var(--fn-side) - 1rem)); }
   .fn-doodle img { width: 6rem; left: calc(-1 * min(10rem, var(--fn-side) - 1rem)); }
+  .fn-doodle--right img { left: auto; right: calc(-1 * min(10rem, var(--fn-side) - 1rem)); }
   .fn-body > p, .fn-body > .fn-memos, .fn-signoff { position: relative; z-index: 1; }
 
   /* player, photo pair and wide photo: centered on the column */
@@ -412,7 +415,7 @@ figcaption {
   .fn-body { font-size: 1.0625rem; line-height: 1.5; }
   .fn-sheet { --fn-tab-h: 2.6rem; --fn-tab-r: 12px; }
   .fn-tab { min-width: 11rem; padding: 0 1.5rem 4px; font-size: 1.7rem; }
-  .fn-dateline { font-size: 1.0625rem; }
+  .fn-dateline { font-size: 1.01rem; }
   .fn-tab__date { height: 1.45rem; }
   /* phones: crop the footer art to its text side so the words stay readable
      (left 1367px of 3038; button keeps its spot within that crop) */
