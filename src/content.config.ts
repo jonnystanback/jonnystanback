@@ -14,6 +14,7 @@ const issues = defineCollection({
       description: z.string(),         // used for link previews and the archive
       cover: image(),                  // full-bleed cover photo (masthead included)
       coverAlt: z.string(),
+      dateImage: image().optional(),   // the date handwritten for the folder tab (transparent PNG)
       draft: z.boolean().default(false),
     }),
 });

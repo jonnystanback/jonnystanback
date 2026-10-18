@@ -6,8 +6,8 @@ import Base from '../../layouts/Base.astro';
 import '@fontsource/courier-prime/400.css';
 import '@fontsource/courier-prime/400-italic.css';
 import '@fontsource/courier-prime/700.css';
-import '@fontsource/covered-by-your-grace/400.css';
 import '../../styles/field-notes.css';
+import footerArt from '../../assets/field-notes/footer.jpg';
 
 export async function getStaticPaths() {
   const issues = await getCollection('issues', ({ data }) => !data.draft);
@@ -16,7 +16,7 @@ export async function getStaticPaths() {
 
 const { issue } = Astro.props;
 const { Content } = await render(issue);
-const { number, date, location, description, cover, coverAlt } = issue.data;
+const { number, date, location, description, cover, coverAlt, dateImage } = issue.data;
 
 // Dateline as typed: 10-21-26
 const pad = (n: number) => String(n).padStart(2, '0');
@@ -41,7 +41,13 @@ const social = await getImage({ src: cover, width: 1200, height: 630, fit: 'cove
 
     <div class="fn-sheet">
       <!-- folder tab on the top edge of the sheet, with the date typed on it -->
-      <div class="fn-tab"><time datetime={date.toISOString().slice(0, 10)}>{dateline}</time></div>
+      <div class="fn-tab">
+        <time datetime={date.toISOString().slice(0, 10)}>
+          {dateImage
+            ? <Image src={dateImage} alt={dateline} widths={[200, 400]} sizes="9rem" class="fn-tab__date" />
+            : dateline}
+        </time>
+      </div>
       <div class="fn-dateline">
         <span>{location}</span>
       </div>
@@ -51,12 +57,17 @@ const social = await getImage({ src: cover, width: 1200, height: 630, fit: 'cove
         <Content />
       </div>
 
+      <!-- Footer art with the subscribe call baked in; the button area is a real link -->
       <aside class="fn-subscribe" aria-labelledby="fn-subscribe-title">
-        <h2 id="fn-subscribe-title">Get the next letter</h2>
-        <p>Field Notes arrives once a month: unreleased songs, stories from the studio, and whatever I’m working through.</p>
+        <h2 id="fn-subscribe-title" class="fn-visually-hidden">Get the next letter</h2>
+        <Image
+          src={footerArt}
+          alt="Get the next letter. Field Notes arrives once a month: unreleased songs, stories from the studio, and whatever I’m working through. Already subscribed? Reply to any letter and it comes straight to me."
+          widths={[800, 1400, 2000, 3000]}
+          sizes="100vw"
+          class="fn-subscribe__art"
+        />
         <a class="fn-subscribe__button" href="https://laylo.com/jonnystanback" target="_blank" rel="noopener">Subscribe to Field Notes</a>
-        <p class="fn-subscribe__small">Already subscribed? Reply to any letter and it comes straight to me.</p>
-        <p class="fn-subscribe__copy">&copy; {new Date().getFullYear()} Jonny Stanback. All rights reserved.</p>
       </aside>
     </div>
   </article>

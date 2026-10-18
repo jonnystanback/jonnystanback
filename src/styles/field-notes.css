@@ -95,7 +95,7 @@ body.field-notes {
   background-size: 900px auto;
   background-blend-mode: multiply;
   border-radius: var(--fn-tab-r) var(--fn-tab-r) 0 0;
-  /* date written on the tab in red marker */
+  /* date handwritten on the tab */
   font-family: 'Covered By Your Grace', var(--fn-type);
   font-size: 2.2rem;
   letter-spacing: 0.04em;
@@ -121,14 +121,19 @@ body.field-notes {
 }
 
 /* ---------- Dateline ---------- */
+.fn-tab time { display: flex; align-items: center; }
+.fn-tab__date { display: block; height: 2.1rem; width: auto; }
+
+/* place line, set like the letter itself */
 .fn-dateline {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
   padding: 1.25rem var(--fn-gutter);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-family: var(--fn-letter);
+  font-size: 1.125rem;
+  color: #13100C;
+  -webkit-text-stroke: 0.2px currentColor;
 }
 
 /* ---------- Body ---------- */
@@ -332,7 +337,7 @@ figcaption {
     --fn-side: calc((100vw - var(--fn-text)) / 2 - var(--fn-gutter));
   }
 
-  .fn-body { font-size: 1.25rem; }
+  .fn-body, .fn-dateline { font-size: 1.25rem; }
 
   /* notebook page: right margin, running ~35% past the window edge */
   .fn-artifact {
@@ -406,7 +411,12 @@ figcaption {
   .fn-body { font-size: 1.0625rem; line-height: 1.5; }
   .fn-sheet { --fn-tab-h: 2.6rem; --fn-tab-r: 12px; }
   .fn-tab { min-width: 11rem; padding: 0 1.5rem 4px; font-size: 1.7rem; }
-  .fn-dateline { font-size: 0.7rem; }
+  .fn-dateline { font-size: 1.0625rem; }
+  .fn-tab__date { height: 1.7rem; }
+  /* phones: crop the footer art to its text side so the words stay readable
+     (left 1367px of 3038; button keeps its spot within that crop) */
+  .fn-subscribe .fn-subscribe__art { aspect-ratio: 1367 / 1389; object-fit: cover; object-position: left center; }
+  .fn-subscribe .fn-subscribe__button { left: 16.17%; width: 54.57%; }
   .fn-demo__bar { grid-template-columns: auto 1fr; column-gap: 1rem; row-gap: 0.9rem; padding: 1rem 1.1rem; }
   .fn-demo__title { font-size: 0.92rem; white-space: normal; }
   .fn-demo__wave { grid-column: 1 / -1; height: 2.1rem; }
@@ -420,35 +430,30 @@ figcaption {
 
 /* ---------- Subscribe ---------- */
 .fn-subscribe {
+  position: relative;
   margin: var(--fn-s4) 0 0;
-  padding: clamp(2.5rem, 7vw, 4.5rem) var(--fn-gutter);
-  /* marker red, printed on the same paper as the letter */
-  background: var(--fn-marker) var(--fn-paper-texture) repeat-y center top / max(100%, 900px) auto;
-  background-blend-mode: multiply;
-  color: #FFF4EA;
-  text-align: center;
   clear: both;
+  line-height: 0;
 }
-.fn-subscribe h2 {
-  font-family: var(--fn-display);
-  font-weight: normal;
-  font-size: clamp(2.6rem, 8vw, 4.75rem);
-  line-height: 0.95;
-  margin: 0 0 1rem;
-}
-.fn-subscribe p { max-width: 30rem; margin: 0 auto 1.6rem; line-height: 1.6; }
+.fn-subscribe__art { display: block; width: 100%; height: auto; }
+/* invisible link laid exactly over the button drawn in the footer art
+   (art is 3038x1389; button spans x 221-967, y 941-1074) */
 .fn-subscribe__button {
-  display: inline-block;
-  padding: 0.95rem 1.6rem;
-  background: #FFF4EA;
-  color: var(--fn-marker);
-  font-weight: 700;
-  text-decoration: none;
-  letter-spacing: 0.03em;
+  position: absolute;
+  left: 7.27%;
+  top: 67.75%;
+  width: 24.56%;
+  height: 9.58%;
+  font-size: 0;
+  color: transparent;
+  border-radius: 2px;
 }
-.fn-subscribe__button:hover { background: #fff; }
-.fn-subscribe .fn-subscribe__small { margin: 1.4rem auto 0; font-size: 0.8rem; opacity: 0.85; }
-.fn-subscribe .fn-subscribe__copy { margin: clamp(2.5rem, 6vw, 4rem) auto 0; font-size: 0.75rem; opacity: 0.6; }
+.fn-subscribe__button:hover { background: rgba(255, 255, 255, 0.08); }
+.fn-subscribe__button:focus-visible { outline: 3px solid #FFF4EA; outline-offset: 3px; }
+.fn-visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
 
 body.field-notes footer {
   position: relative; z-index: 1;
