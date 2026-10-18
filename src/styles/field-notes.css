@@ -72,7 +72,7 @@ body.field-notes header { position: relative; }
 .fn-body {
   padding: var(--fn-s4) var(--fn-gutter) 0;
   font-size: 1.0625rem;
-  line-height: 1.75;
+  line-height: 1.55;
   overflow-x: clip;
 }
 
@@ -86,7 +86,7 @@ body.field-notes header { position: relative; }
   margin-right: auto;
 }
 
-.fn-body p { margin-top: 0; margin-bottom: 1.25em; }
+.fn-body p { margin-top: 0; margin-bottom: 1.1em; }
 
 /* Raised initial on the first paragraph, as in the print mockup:
    a tall letter standing on the first line's baseline. */
@@ -102,7 +102,6 @@ body.field-notes header { position: relative; }
 .fn-artifact { margin: 0 0 var(--fn-s2); }
 .fn-artifact__paper {
   background: var(--fn-card);
-  box-shadow: 0 1px 2px rgba(60, 40, 20, 0.14), 0 14px 30px -18px rgba(60, 40, 20, 0.45);
 }
 .fn-artifact img { display: block; width: 100%; height: auto; }
 
@@ -286,7 +285,7 @@ body.field-notes footer { color: var(--fn-ink); }
 }
 
 @media (max-width: 640px) {
-  .fn-body { font-size: 1rem; line-height: 1.68; }
+  .fn-body { font-size: 1rem; line-height: 1.5; }
   .fn-dateline { font-size: 0.68rem; flex-wrap: wrap; row-gap: 0.25rem; }
   .fn-dateline > :nth-child(2) { order: 3; flex-basis: 100%; }
   .fn-demo__bar { grid-template-columns: auto 1fr; column-gap: 1rem; row-gap: 0.9rem; padding: 1rem 1.1rem; }
