@@ -24,7 +24,7 @@ const dateline = `${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())}-${Str
 const coverRatio = (cover.height / cover.width).toFixed(4);
 const social = await getImage({ src: cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
 ---
-<Base title={`Field Notes No. ${number}`} description={description} bodyClass="field-notes" image={social.src} type="article" header={false}>
+<Base title={`Field Notes No. ${number}`} description={description} bodyClass="field-notes" image={social.src} type="article" header={false} footer={false}>
   <article class="fn" style={`--fn-cover-ratio:${coverRatio}`}>
     <!-- The cover holds in place while the letter slides up over it -->
     <div class="fn-cover">
@@ -56,6 +56,7 @@ const social = await getImage({ src: cover, width: 1200, height: 630, fit: 'cove
         <p>Field Notes arrives once a month: unreleased songs, stories from the studio, and whatever I’m working through.</p>
         <a class="fn-subscribe__button" href="https://laylo.com/jonnystanback" target="_blank" rel="noopener">Subscribe to Field Notes</a>
         <p class="fn-subscribe__small">Already subscribed? Reply to any letter and it comes straight to me.</p>
+        <p class="fn-subscribe__copy">&copy; {new Date().getFullYear()} Jonny Stanback. All rights reserved.</p>
       </aside>
     </div>
   </article>
