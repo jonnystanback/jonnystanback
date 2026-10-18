@@ -418,3 +418,38 @@ body.field-notes footer { color: var(--fn-ink); position: relative; z-index: 1; 
 .fn-index__no { display: block; font-family: var(--fn-display); font-size: 1.8rem; color: var(--fn-red); }
 .fn-index__desc { display: block; line-height: 1.55; margin-top: 0.3rem; }
 .fn-index__list a:hover .fn-index__no { text-decoration: underline; text-underline-offset: 0.15em; }
+
+/* ==========================================================================
+   VARIANT (comparison only): centered column, justified text
+   ========================================================================== */
+.fn-title { text-align: center; }
+.fn-body > p {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphenate-limit-chars: 7 3 3;
+}
+.fn-signoff { text-align: center; }
+.fn-signoff__sig { margin-inline: auto; }
+.fn-memos { text-align: center; }
+
+@media (min-width: 1100px) {
+  /* the column sits in the middle of the page; margin items hang off to the right */
+  .fn-body { width: min(100% - 2 * var(--fn-gutter), var(--fn-text)); }
+  .fn-pull {
+    margin-right: calc(-1 * (var(--fn-mw) + var(--fn-gap)));
+  }
+  /* player, photo pair and wide photo are centered on the column */
+  .fn-body > .fn-demo {
+    width: calc(var(--fn-text) + 6rem);
+    margin-left: -3rem;
+  }
+  .fn-pair {
+    width: 56rem;
+    margin-left: calc((var(--fn-text) - 56rem) / 2);
+  }
+  .fn-wide {
+    width: 60rem;
+    margin-left: calc((var(--fn-text) - 60rem) / 2);
+  }
+}
