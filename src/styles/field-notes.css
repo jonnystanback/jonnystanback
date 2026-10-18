@@ -271,7 +271,7 @@ figcaption {
 /* ---------- Sign-off ---------- */
 .fn-signoff { margin-top: var(--fn-s2); }
 .fn-signoff p { margin-bottom: 0.5rem; }
-.fn-signoff__sig { display: block; width: 190px; max-width: 55%; height: auto; margin-left: -0.6rem; }
+.fn-signoff__sig { display: block; width: 190px; max-width: 55%; height: auto; }
 
 /* ==========================================================================
    Wide screens: column on the left, margin on the right
