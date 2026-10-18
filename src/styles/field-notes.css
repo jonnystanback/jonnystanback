@@ -290,13 +290,13 @@ figcaption {
     font-size: 1.25rem;
     position: relative;
   }
-  /* thin red rule between the writing and the margin, like a legal pad */
+  /* thin red rule down the left of the writing, like a legal pad */
   .fn-body::before {
     content: '';
     position: absolute;
     top: var(--fn-s3);
     bottom: 0;
-    left: calc(var(--fn-text) + var(--fn-gap) / 2);
+    left: -1.75rem;   /* just left of the writing, like a legal pad */
     width: 1px;
     background: var(--fn-red);
     opacity: 0.55;
@@ -304,6 +304,8 @@ figcaption {
   }
   /* photos and the player sit on top of the rule */
   .fn-pair, .fn-wide, .fn-body > .fn-demo { position: relative; z-index: 1; }
+  /* the player's caption lines up with the writing, right of the rule */
+  .fn-body > .fn-demo figcaption { padding-left: 3rem; }
   .fn-body > p,
   .fn-body > .fn-memos,
   .fn-body > .fn-signoff,
