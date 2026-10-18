@@ -155,8 +155,6 @@ figcaption {
   font-size: 1.85rem;
   line-height: 1.08;
 }
-.fn-pull.is-ready span { visibility: hidden; }
-.fn-pull.is-ready span.on { visibility: visible; }
 
 /* ---------- Demo player ---------- */
 .fn-demo { margin: var(--fn-s2) 0; }

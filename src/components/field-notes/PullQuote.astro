@@ -1,32 +1,8 @@
 ---
-// A pull quote that sits in the margin (desktop) and types itself out,
-// letter by letter, the first time it scrolls into view.
+// A pull quote: sits in the right margin on desktop, inline on phones.
 interface Props { text: string; }
 const { text } = Astro.props;
-const chars = [...`“${text}”`];
 ---
-<blockquote class="fn-pull" data-pull aria-label={`“${text}”`}>
-  <p aria-hidden="true">{chars.map((c) => <span>{c}</span>)}</p>
+<blockquote class="fn-pull">
+  <p>“{text}”</p>
 </blockquote>
-
-<script>
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  document.querySelectorAll<HTMLElement>('[data-pull]').forEach((el) => {
-    const letters = [...el.querySelectorAll('span')];
-    if (reduce || !('IntersectionObserver' in window)) { el.classList.add('is-typed'); return; }
-    el.classList.add('is-ready');            // hide letters (space is kept, so nothing jumps)
-    const io = new IntersectionObserver((entries) => {
-      if (!entries.some((e) => e.isIntersecting)) return;
-      io.disconnect();
-      let i = 0;
-      const tick = () => {
-        letters[i]?.classList.add('on');
-        i += 1;
-        if (i < letters.length) setTimeout(tick, letters[i - 1].textContent === ' ' ? 20 : 42 + Math.random() * 30);
-        else el.classList.add('is-typed');
-      };
-      setTimeout(tick, 250);
-    }, { threshold: 0.6 });
-    io.observe(el);
-  });
-</script>
