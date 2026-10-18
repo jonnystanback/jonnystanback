@@ -1,0 +1,10 @@
+---
+import { Image } from 'astro:assets';
+import signature from '../../assets/field-notes/001/signature.png';
+interface Props { line?: string; }
+const { line = 'See you next month,' } = Astro.props;
+---
+<div class="fn-signoff">
+  <p>{line}</p>
+  <Image src={signature} alt="Jonny" width={190} class="fn-signoff__sig" />
+</div>

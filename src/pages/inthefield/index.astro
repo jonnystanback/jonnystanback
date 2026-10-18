@@ -1,0 +1,31 @@
+---
+// In The Field: the home for Field Notes. Lists every published issue.
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import '@fontsource/courier-prime/400.css';
+import '@fontsource/courier-prime/700.css';
+import '../../styles/field-notes.css';
+
+const issues = (await getCollection('issues', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<Base title="In The Field" description="Field Notes: a monthly letter from Jonny Stanback with unreleased songs, stories and works in progress." bodyClass="field-notes">
+  <main class="fn-index">
+    <h1>In The Field</h1>
+    <p class="fn-index__intro">A monthly letter of my thoughts, unreleased work, and projects I’m in the middle of.</p>
+    <a class="fn-subscribe__button" href="https://laylo.com/jonnystanback" target="_blank" rel="noopener">Subscribe to Field Notes</a>
+
+    <ol class="fn-index__list" reversed>
+      {issues.map((issue) => (
+        <li>
+          <a href={`/inthefield/${issue.data.number}`}>
+            <Image src={issue.data.cover} alt="" widths={[600, 1000]} sizes="(min-width: 800px) 640px, 100vw" />
+            <span class="fn-index__no">No. {issue.data.number}</span>
+            <span class="fn-index__desc">{issue.data.description}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </main>
+</Base>

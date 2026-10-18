@@ -1,0 +1,55 @@
+---
+// One page per Field Notes issue: /inthefield/001, /inthefield/002, ...
+import { getCollection, render } from 'astro:content';
+import { Image, getImage } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import '@fontsource/courier-prime/400.css';
+import '@fontsource/courier-prime/400-italic.css';
+import '@fontsource/courier-prime/700.css';
+import '../../styles/field-notes.css';
+
+export async function getStaticPaths() {
+  const issues = await getCollection('issues', ({ data }) => !data.draft);
+  return issues.map((issue) => ({ params: { number: issue.data.number }, props: { issue } }));
+}
+
+const { issue } = Astro.props;
+const { Content } = await render(issue);
+const { number, date, location, description, cover, coverAlt } = issue.data;
+
+const dateline = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const social = await getImage({ src: cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
+---
+<Base title={`Field Notes No. ${number}`} description={description} bodyClass="field-notes" image={social.src} type="article">
+  <article class="fn">
+    <div class="fn-cover">
+      <h1 class="visually-hidden">Field Notes No. {number}</h1>
+      <Image
+        src={cover}
+        alt={coverAlt}
+        widths={[800, 1400, 2000, 2800]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        class="fn-cover__img"
+      />
+    </div>
+
+    <div class="fn-dateline">
+      <time datetime={date.toISOString().slice(0, 10)}>{dateline}</time>
+      <span>Field Notes No. {number}</span>
+      <span>{location}</span>
+    </div>
+
+    <div class="fn-body">
+      <Content />
+    </div>
+
+    <aside class="fn-subscribe" aria-labelledby="fn-subscribe-title">
+      <h2 id="fn-subscribe-title">Get the next letter</h2>
+      <p>Field Notes arrives once a month: unreleased songs, stories from the studio, and whatever I’m working through.</p>
+      <a class="fn-subscribe__button" href="https://laylo.com/jonnystanback" target="_blank" rel="noopener">Subscribe to Field Notes</a>
+      <p class="fn-subscribe__small">Already subscribed? Reply to any letter and it comes straight to me.</p>
+    </aside>
+  </article>
+</Base>

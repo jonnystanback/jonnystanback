@@ -7,8 +7,10 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;          // page name, e.g. "Music"
   description?: string;
-  bodyClass?: 'home' | 'inner-page';
+  bodyClass?: string;      // 'home' | 'inner-page' | 'field-notes'
   footer?: boolean;
+  image?: string;          // social preview image (absolute or site-relative URL)
+  type?: 'website' | 'article';
 }
 
 const {
@@ -16,10 +18,12 @@ const {
   description = 'Official website of Jonny Stanback',
   bodyClass = 'inner-page',
   footer = true,
+  image = '/social.png',
+  type = 'website',
 } = Astro.props;
 
 const fullTitle = title ? `${title} - Jonny Stanback` : 'Jonny Stanback';
-const socialImage = new URL('/social.png', Astro.site).href;
+const socialImage = new URL(image, Astro.site).href;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +37,7 @@ const socialImage = new URL('/social.png', Astro.site).href;
   <meta property="og:title" content={fullTitle}>
   <meta property="og:description" content={description}>
   <meta property="og:image" content={socialImage}>
-  <meta property="og:type" content="website">
+  <meta property="og:type" content={type}>
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content={fullTitle}>
   <meta name="twitter:description" content={description}>

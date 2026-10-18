@@ -1,0 +1,103 @@
+---
+number: "001"
+date: 2026-10-15
+location: "Santa Barbara, CA"
+description: "The first letter: why I'm starting Field Notes, and an unreleased demo I wrote about my daughter."
+cover: ../../assets/field-notes/001/cover.jpg
+coverAlt: "Jonny lying on a patterned couch in a wood-paneled room, under the red Field Notes masthead."
+---
+import Artifact from '../../components/field-notes/Artifact.astro';
+import Figure from '../../components/field-notes/Figure.astro';
+import VoiceMemos from '../../components/field-notes/VoiceMemos.astro';
+import Demo from '../../components/field-notes/Demo.astro';
+import Signoff from '../../components/field-notes/Signoff.astro';
+import checklist from '../../assets/field-notes/001/checklist.jpg';
+import studio from '../../assets/field-notes/001/studio.jpg';
+import fieldGuitar from '../../assets/field-notes/001/field-guitar.jpg';
+
+It’s starting to cool off in Santa Barbara.
+
+I wake up, make my coffee, and step outside onto the porch for some crisp air. What a lovely break from the heatwave.
+
+It’s quiet outside, much quieter than LA, where I spent nearly a decade before moving here. I start to think about how much has changed. My life looks a lot different now.
+
+<Artifact
+  src={checklist}
+  alt="A typed flight checklist page covered in handwritten notes in blue and red ink."
+  caption="Field notes, the original kind: an Apollo 13 checklist page, annotated in flight."
+/>
+
+The last two years have really been a doozy. We moved to Santa Barbara. I started a design agency with my friend. I signed an indie record deal. We got married. And now we have a beautiful newborn daughter, Rosie.
+
+I feel incredibly blessed. And also a little dizzy trying to balance it all.
+
+Out of habit, I check my phone. Unanswered DMs, comments. My music has never reached more people, but I feel more disconnected than ever. Then I scroll through the demos and voice notes on my phone.
+
+<VoiceMemos memos={[
+  { title: 'Something Divine', date: 'October 3', demo: 'something-divine' },
+  { title: 'Heartbreaker (Long Time)', date: 'October 4' },
+  { title: 'Empty Roads', date: 'October 8' },
+]} />
+
+I probably have hundreds of notes and ideas that I’ve never shared.
+
+Here’s one of them, “Something Divine.” I wrote it about seeing Rosie for the first time. Sometimes these things just pour out of you. Couldn’t help myself.
+
+<Demo
+  id="something-divine"
+  title="Something Divine"
+  src="/field-notes/001/something-divine.mp3"
+  note="Voice memo, October 3. Unreleased."
+/>
+
+I take a sip of coffee.
+
+There’s never been a better time to reach people as an independent artist. I really believe that. But I’m realizing that reaching people and connecting with them aren’t always the same thing.
+
+Which is why I’m starting Field Notes.
+
+<Figure
+  layout="spread"
+  src={studio}
+  alt="Two acoustic guitars and a sunburst electric leaning in front of a keyboard on a red Persian rug, a small fan beside them."
+  caption="My studio lately. It’s been too hot to record with the heatwave."
+>
+It’s a space for those who have connected with my music. Somewhere I can share things that don’t fit neatly into a social media post.
+
+There’s another reason I want to do this, too.
+
+I’ve always struggled with how to share all the different creative sides of myself. I love making things, and the more time I spend writing songs, building brands, and working on creative projects, the more interested I become in the process itself.
+</Figure>
+
+I’ve noticed certain patterns across the different things I’ve worked on. Lessons from songwriting that apply to design. Lessons from design that apply to life.
+
+Like how the feeling you get when you craft the right hook can feel eerily similar to placing the right pixels. How it’s way easier to begin projects than finish them. How being vulnerable makes you a better songwriter, designer, and dad.
+
+I’m certainly no expert. I’m learning as I go. But maybe sharing what I’m learning can help someone else along the way.
+
+So, welcome to Field Notes.
+
+You can expect unreleased songs, demos, behind-the-scenes photos and videos, stories from my life, occasional essays, things I’m working through, and questions I’m still trying to answer.
+
+Some months might be more about music. Others might be about creativity, fatherhood, or something entirely unexpected.
+
+Hopefully, this can be a two-way conversation. I’d love to hear from you.
+
+We can talk about the art of crafting things that matter. Or the weather.
+
+I’ll send a new letter once a month.
+
+<Figure
+  src={fieldGuitar}
+  alt="Jonny playing a vintage acoustic guitar in a green backyard, framed by a tree trunk."
+/>
+
+And finally, thank you for being here.
+
+A lot of this was inspired by the new listeners and followers who’ve found my music recently. Whether you’ve been listening for years or just discovered a song last week, I’m genuinely grateful you’ve decided to spend some of your time with my work.
+
+As an artist, that’s one of the greatest gifts you can receive.
+
+Feel free to reply, ask me a question, or just say hello.
+
+<Signoff />

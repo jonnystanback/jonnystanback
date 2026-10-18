@@ -1,0 +1,79 @@
+---
+// Audio player for a demo / voice memo. Plays inline; the waveform fills
+// as it plays and can be clicked to jump around.
+interface Props {
+  id: string;          // anchor, e.g. "something-divine" (memo list links here)
+  title: string;
+  src: string;         // path under /public, e.g. /field-notes/001/something-divine.m4a
+  note?: string;       // small line under the player
+}
+const { id, title, src, note } = Astro.props;
+
+// A gentle, deterministic waveform shape so it looks the same on every load.
+// (Swap for real peaks from the audio file later if wanted.)
+const BARS = 72;
+let seed = [...id].reduce((a, c) => a + c.charCodeAt(0), 0);
+const rand = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+const bars = Array.from({ length: BARS }, (_, i) => {
+  const swell = 0.55 + 0.45 * Math.sin((i / BARS) * Math.PI);
+  return Math.round((0.25 + rand() * 0.75) * swell * 100);
+});
+---
+<figure class="fn-demo" id={id} data-demo>
+  <div class="fn-demo__bar">
+    <button class="fn-demo__play" type="button" aria-label={`Play ${title}`} data-play>
+      <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" /></svg>
+      <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z" /></svg>
+    </button>
+    <div class="fn-demo__meta">
+      <span class="fn-demo__title">{title}</span>
+      <span class="fn-demo__time" data-time>Demo</span>
+    </div>
+    <div class="fn-demo__wave" data-wave role="slider" tabindex="0" aria-label={`Seek ${title}`} aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      {bars.map((h) => <span style={`--h:${h}%`}></span>)}
+    </div>
+  </div>
+  {note && <figcaption>{note}</figcaption>}
+  <audio preload="metadata" src={src} data-audio></audio>
+</figure>
+
+<script>
+  const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+  document.querySelectorAll<HTMLElement>('[data-demo]').forEach((root) => {
+    const audio = root.querySelector<HTMLAudioElement>('[data-audio]')!;
+    const play = root.querySelector<HTMLButtonElement>('[data-play]')!;
+    const wave = root.querySelector<HTMLElement>('[data-wave]')!;
+    const time = root.querySelector<HTMLElement>('[data-time]')!;
+    const bars = [...wave.children] as HTMLElement[];
+    const label = play.getAttribute('aria-label')!;
+
+    const paint = () => {
+      const p = audio.duration ? audio.currentTime / audio.duration : 0;
+      const lit = Math.round(p * bars.length);
+      bars.forEach((b, i) => b.classList.toggle('on', i < lit));
+      wave.setAttribute('aria-valuenow', String(Math.round(p * 100)));
+      if (audio.duration) time.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
+    };
+
+    play.addEventListener('click', () => {
+      // Only one demo plays at a time.
+      document.querySelectorAll<HTMLAudioElement>('[data-audio]').forEach((a) => a !== audio && a.pause());
+      audio.paused ? audio.play() : audio.pause();
+    });
+    audio.addEventListener('play', () => { root.classList.add('is-playing'); play.setAttribute('aria-label', label.replace('Play', 'Pause')); });
+    audio.addEventListener('pause', () => { root.classList.remove('is-playing'); play.setAttribute('aria-label', label); });
+    audio.addEventListener('timeupdate', paint);
+    audio.addEventListener('loadedmetadata', paint);
+    audio.addEventListener('error', () => { root.classList.add('is-unavailable'); time.textContent = 'Audio coming soon'; });
+
+    const seek = (p: number) => { if (audio.duration) { audio.currentTime = Math.min(Math.max(p, 0), 1) * audio.duration; paint(); } };
+    wave.addEventListener('click', (e) => { const r = wave.getBoundingClientRect(); seek((e.clientX - r.left) / r.width); });
+    wave.addEventListener('keydown', (e) => {
+      if (!audio.duration) return;
+      if (e.key === 'ArrowRight') { audio.currentTime += 5; e.preventDefault(); }
+      if (e.key === 'ArrowLeft') { audio.currentTime -= 5; e.preventDefault(); }
+      paint();
+    });
+  });
+</script>

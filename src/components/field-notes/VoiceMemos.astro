@@ -1,0 +1,18 @@
+---
+// A list of voice memo titles + dates, set like a phone's recordings list.
+// Memos with `demo` set link down to that demo's player.
+interface Memo { title: string; date: string; demo?: string; }
+interface Props { memos: Memo[]; }
+const { memos } = Astro.props;
+---
+<ol class="fn-memos">
+  {memos.map((m) => (
+    <li>
+      {m.demo ? (
+        <a href={`#${m.demo}`}><span class="fn-memos__title">“{m.title}”</span><span class="fn-memos__date">{m.date}</span></a>
+      ) : (
+        <span class="fn-memos__row"><span class="fn-memos__title">“{m.title}”</span><span class="fn-memos__date">{m.date}</span></span>
+      )}
+    </li>
+  ))}
+</ol>

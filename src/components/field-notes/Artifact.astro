@@ -1,0 +1,15 @@
+---
+// A scanned page or object that sits in the margin beside the text on
+// desktop, and inline (slightly tilted, like it was set on the table) on phones.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props { src: ImageMetadata; alt: string; caption?: string; }
+const { src, alt, caption } = Astro.props;
+---
+<figure class="fn-artifact">
+  <div class="fn-artifact__paper">
+    <Image src={src} alt={alt} widths={[420, 640, 900]} sizes="(min-width: 1100px) 340px, 82vw" />
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
