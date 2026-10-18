@@ -6,15 +6,15 @@ interface Props {
   title: string;
   src: string;         // path under /public, e.g. /field-notes/001/something-divine.m4a
   note?: string;       // small line under the player
+  peaks?: number[];    // waveform bar heights (0-100) measured from the audio
 }
-const { id, title, src, note } = Astro.props;
+const { id, title, src, note, peaks } = Astro.props;
 
-// A gentle, deterministic waveform shape so it looks the same on every load.
-// (Swap for real peaks from the audio file later if wanted.)
+// Waveform: real peaks if provided, otherwise a gentle placeholder shape.
 const BARS = 72;
 let seed = [...id].reduce((a, c) => a + c.charCodeAt(0), 0);
 const rand = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
-const bars = Array.from({ length: BARS }, (_, i) => {
+const bars = peaks ?? Array.from({ length: BARS }, (_, i) => {
   const swell = 0.55 + 0.45 * Math.sin((i / BARS) * Math.PI);
   return Math.round((0.25 + rand() * 0.75) * swell * 100);
 });
