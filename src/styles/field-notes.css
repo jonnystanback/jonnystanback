@@ -88,7 +88,16 @@ body.field-notes {
   font-family: var(--fn-letter);
   font-size: 1.125rem;
   line-height: 1.55;
+  /* ink: slightly heavier strokes with a soft bleed, like a ribbon on paper */
+  color: #16120E;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  text-shadow: 0 0 0.6px rgba(22, 18, 14, 0.75), 0 0 1.4px rgba(22, 18, 14, 0.22);
 }
+.fn-body figcaption,
+.fn-body .fn-demo,
+.fn-body .fn-pull,
+.fn-title { text-shadow: none; }
 
 .fn-body p { margin: 0 0 1.1em; }
 
@@ -100,7 +109,7 @@ body.field-notes {
   line-height: 1;
   letter-spacing: 0.01em;
   text-transform: uppercase;
-  text-align: center;
+  text-align: left;
   margin: 0 0 var(--fn-s2);
 }
 
@@ -239,6 +248,10 @@ figcaption {
   background: linear-gradient(to right, var(--fn-wave) calc(var(--p, 0) * 100%), rgba(240, 84, 84, 0.25) 0);
 }
 
+/* ---------- Small photo pinned in the margin ---------- */
+.fn-margin-photo { margin: var(--fn-s2) 0 var(--fn-s2) auto; width: min(62%, 16rem); }
+.fn-margin-photo img { display: block; width: 100%; height: auto; }
+
 /* ---------- Photos ---------- */
 .fn-break-left,
 .fn-wide { margin: var(--fn-s3) 0; clear: both; }
@@ -271,6 +284,13 @@ figcaption {
     clear: right;
     width: var(--fn-mw);
     margin: 0.3rem 0 var(--fn-s2) var(--fn-gap);
+  }
+
+  .fn-margin-photo {
+    float: right;
+    clear: right;
+    width: var(--fn-mw);
+    margin: 0.4rem 0 var(--fn-s2) var(--fn-gap);
   }
 
   /* notebook page: in the margin, running ~35% past the window edge */
