@@ -6,14 +6,12 @@ description: "The first letter: why I'm starting Field Notes, and an unreleased 
 cover: ../../assets/field-notes/001/cover.jpg
 coverAlt: "Jonny lying on a patterned couch in a wood-paneled room, under the red Field Notes masthead."
 ---
-import Artifact from '../../components/field-notes/Artifact.astro';
 import Figure from '../../components/field-notes/Figure.astro';
 import VoiceMemos from '../../components/field-notes/VoiceMemos.astro';
 import Demo from '../../components/field-notes/Demo.astro';
 import Signoff from '../../components/field-notes/Signoff.astro';
 import MarginNote from '../../components/field-notes/MarginNote.astro';
 import PhotoPair from '../../components/field-notes/PhotoPair.astro';
-import checklist from '../../assets/field-notes/001/checklist.jpg';
 import studio from '../../assets/field-notes/001/studio.jpg';
 import fieldGuitar from '../../assets/field-notes/001/field-guitar.jpg';
 import mic from '../../assets/field-notes/001/mic.jpg';
@@ -27,11 +25,6 @@ I wake up, make my coffee, and step outside onto the porch for some crisp air. W
 
 It’s quiet outside, much quieter than LA, where I spent nearly a decade before moving here. I start to think about how much has changed. My life looks a lot different now.
 
-<Artifact
-  src={checklist}
-  alt="A typed page covered in handwritten notes in blue and red ink."
-  caption="Handwritten note from my notebook."
-/>
 
 The last two years have really been a doozy. We moved to Santa Barbara. I started a design agency with my friend. I signed an indie record deal. We got married. And now we have a beautiful newborn daughter, Rosie.
 
@@ -59,6 +52,8 @@ Here’s one of them, “Something Divine.” I wrote it about seeing Rosie for 
 
 I take a sip of coffee.
 
+<MarginNote src={noteReaching} side="right" alt="Handwritten in red: Reaching people and connecting with them aren’t always the same thing." />
+
 There’s never been a better time to reach people as an independent artist. I really believe that. But I’m realizing that reaching people and connecting with them aren’t always the same thing.
 
 Which is why I’m starting Field Notes.
@@ -78,8 +73,6 @@ Which is why I’m starting Field Notes.
 
 It’s a space for those who have connected with my music. Somewhere I can share things that don’t fit neatly into a social media post.
 
-<MarginNote src={noteReaching} side="right" alt="Handwritten in red: Reaching people and connecting with them aren’t always the same thing." />
-
 There’s another reason I want to do this, too.
 
 I’ve always struggled with how to share all the different creative sides of myself. I love making things, and the more time I spend writing songs, building brands, and working on creative projects, the more interested I become in the process itself.
@@ -98,9 +91,9 @@ Some months might be more about music. Others might be about creativity, fatherh
 
 Hopefully, this can be a two-way conversation. I’d love to hear from you.
 
-We can talk about the art of crafting things that matter. Or the weather.
-
 <MarginNote src={noteCraft} side="left" alt="Handwritten in red: How do you craft things that matter??" />
+
+We can talk about the art of crafting things that matter. Or the weather.
 
 I’ll send a new letter once a month.
 
