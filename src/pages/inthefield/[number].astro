@@ -39,8 +39,9 @@ const social = await getImage({ src: cover, width: 1200, height: 630, fit: 'cove
     </div>
 
     <div class="fn-sheet">
+      <!-- folder tab on the top edge of the sheet, with the date typed on it -->
+      <div class="fn-tab"><time datetime={date.toISOString().slice(0, 10)}>{dateline}</time></div>
       <div class="fn-dateline">
-        <time datetime={date.toISOString().slice(0, 10)}>{dateline}</time>
         <span>{location}</span>
       </div>
 
