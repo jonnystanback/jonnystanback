@@ -122,7 +122,7 @@ body.field-notes {
 
 /* ---------- Dateline ---------- */
 .fn-tab time { display: flex; align-items: center; }
-.fn-tab__date { display: block; height: 2.1rem; width: auto; }
+.fn-tab__date { display: block; height: 1.8rem; width: auto; }
 
 /* place line, set like the letter itself */
 .fn-dateline {
@@ -132,6 +132,7 @@ body.field-notes {
   padding: 1.25rem var(--fn-gutter);
   font-family: var(--fn-letter);
   font-size: 1.125rem;
+  text-transform: uppercase;
   color: #13100C;
   -webkit-text-stroke: 0.2px currentColor;
 }
@@ -412,11 +413,11 @@ figcaption {
   .fn-sheet { --fn-tab-h: 2.6rem; --fn-tab-r: 12px; }
   .fn-tab { min-width: 11rem; padding: 0 1.5rem 4px; font-size: 1.7rem; }
   .fn-dateline { font-size: 1.0625rem; }
-  .fn-tab__date { height: 1.7rem; }
+  .fn-tab__date { height: 1.45rem; }
   /* phones: crop the footer art to its text side so the words stay readable
      (left 1367px of 3038; button keeps its spot within that crop) */
-  .fn-subscribe .fn-subscribe__art { aspect-ratio: 1367 / 1389; object-fit: cover; object-position: left center; }
-  .fn-subscribe .fn-subscribe__button { left: 16.17%; width: 54.57%; }
+  .fn-subscribe .fn-subscribe__art { aspect-ratio: 1367 / 1427; object-fit: cover; object-position: left center; }
+  .fn-subscribe .fn-subscribe__button { left: 14.7%; width: 54.57%; }
   .fn-demo__bar { grid-template-columns: auto 1fr; column-gap: 1rem; row-gap: 0.9rem; padding: 1rem 1.1rem; }
   .fn-demo__title { font-size: 0.92rem; white-space: normal; }
   .fn-demo__wave { grid-column: 1 / -1; height: 2.1rem; }
@@ -437,13 +438,13 @@ figcaption {
 }
 .fn-subscribe__art { display: block; width: 100%; height: auto; }
 /* invisible link laid exactly over the button drawn in the footer art
-   (art is 3038x1389; button spans x 221-967, y 941-1074) */
+   (art is 3038x1427; button spans x 201-947, y 929-1062) */
 .fn-subscribe__button {
   position: absolute;
-  left: 7.27%;
-  top: 67.75%;
+  left: 6.62%;
+  top: 65.1%;
   width: 24.56%;
-  height: 9.58%;
+  height: 9.32%;
   font-size: 0;
   color: transparent;
   border-radius: 2px;
