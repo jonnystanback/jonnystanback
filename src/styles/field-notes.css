@@ -88,16 +88,16 @@ body.field-notes {
   font-family: var(--fn-letter);
   font-size: 1.125rem;
   line-height: 1.55;
-  /* ink: slightly heavier strokes with a soft bleed, like a ribbon on paper */
-  color: #16120E;
+  /* ink: deeper and slightly heavier strokes, kept crisp */
+  color: #13100C;
   -webkit-font-smoothing: auto;
   -moz-osx-font-smoothing: auto;
-  text-shadow: 0 0 0.6px rgba(22, 18, 14, 0.75), 0 0 1.4px rgba(22, 18, 14, 0.22);
+  -webkit-text-stroke: 0.2px currentColor;
 }
 .fn-body figcaption,
 .fn-body .fn-demo,
 .fn-body .fn-pull,
-.fn-title { text-shadow: none; }
+.fn-title { -webkit-text-stroke: 0; }
 
 .fn-body p { margin: 0 0 1.1em; }
 
@@ -248,9 +248,19 @@ figcaption {
   background: linear-gradient(to right, var(--fn-wave) calc(var(--p, 0) * 100%), rgba(240, 84, 84, 0.25) 0);
 }
 
-/* ---------- Small photo pinned in the margin ---------- */
-.fn-margin-photo { margin: var(--fn-s2) 0 var(--fn-s2) auto; width: min(62%, 16rem); }
-.fn-margin-photo img { display: block; width: 100%; height: auto; }
+/* ---------- Two photos, staggered ---------- */
+.fn-pair {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  column-gap: clamp(1rem, 4vw, 3.5rem);
+  align-items: start;
+  margin: var(--fn-s3) 0;
+  clear: both;
+}
+.fn-pair figure { margin: 0; }
+.fn-pair img { display: block; width: 100%; height: auto; }
+.fn-pair .fn-pair__left { margin-top: clamp(3rem, 9vw, 8rem); }
+.fn-pair figcaption { text-align: center; max-width: 18rem; margin-inline: auto; }
 
 /* ---------- Photos ---------- */
 .fn-break-left,
@@ -286,12 +296,7 @@ figcaption {
     margin: 0.3rem 0 var(--fn-s2) var(--fn-gap);
   }
 
-  .fn-margin-photo {
-    float: right;
-    clear: right;
-    width: var(--fn-mw);
-    margin: 0.4rem 0 var(--fn-s2) var(--fn-gap);
-  }
+  .fn-pair { width: calc(100% - 3rem); }
 
   /* notebook page: in the margin, running ~35% past the window edge */
   .fn-artifact {
@@ -338,6 +343,7 @@ figcaption {
   .fn-break-left figcaption,
   .fn-wide figcaption { padding-inline: var(--fn-gutter); }
   .fn-pull p { font-size: 1.7rem; }
+  .fn-pair { margin-inline: calc(-0.5 * var(--fn-gutter)); }
 }
 
 @media (max-width: 640px) {

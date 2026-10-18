@@ -1,0 +1,20 @@
+---
+// Two photos breaking the text side by side, staggered: the left one sits
+// lower, the right one higher. Spans the column and the margin on desktop.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Photo { src: ImageMetadata; alt: string; caption?: string; }
+interface Props { left: Photo; right: Photo; }
+const { left, right } = Astro.props;
+---
+<div class="fn-pair">
+  <figure class="fn-pair__left">
+    <Image src={left.src} alt={left.alt} widths={[500, 800, 1200]} sizes="(min-width: 1100px) 520px, 50vw" />
+    {left.caption && <figcaption>{left.caption}</figcaption>}
+  </figure>
+  <figure class="fn-pair__right">
+    <Image src={right.src} alt={right.alt} widths={[400, 700, 1000]} sizes="(min-width: 1100px) 400px, 45vw" />
+    {right.caption && <figcaption>{right.caption}</figcaption>}
+  </figure>
+</div>

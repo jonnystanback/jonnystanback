@@ -12,7 +12,7 @@ import VoiceMemos from '../../components/field-notes/VoiceMemos.astro';
 import Demo from '../../components/field-notes/Demo.astro';
 import Signoff from '../../components/field-notes/Signoff.astro';
 import PullQuote from '../../components/field-notes/PullQuote.astro';
-import MarginPhoto from '../../components/field-notes/MarginPhoto.astro';
+import PhotoPair from '../../components/field-notes/PhotoPair.astro';
 import checklist from '../../assets/field-notes/001/checklist.jpg';
 import studio from '../../assets/field-notes/001/studio.jpg';
 import fieldGuitar from '../../assets/field-notes/001/field-guitar.jpg';
@@ -60,11 +60,17 @@ There’s never been a better time to reach people as an independent artist. I r
 
 Which is why I’m starting Field Notes.
 
-<Figure
-  layout="break-left"
-  src={studio}
-  alt="Two acoustic guitars and a sunburst electric leaning in front of a keyboard on a red Persian rug, a small fan beside them."
-  caption="My studio lately. It’s been too hot to record with the heatwave."
+<PhotoPair
+  left={{
+    src: studio,
+    alt: 'Two acoustic guitars and a sunburst electric leaning in front of a keyboard on a red Persian rug, a small fan beside them.',
+    caption: 'My studio lately. It’s been too hot to record with the heatwave.',
+  }}
+  right={{
+    src: mic,
+    alt: 'A condenser microphone with a red ring in a shock mount, in front of a foam vocal shield, with a pop filter beside it.',
+    caption: 'In the studio recording using my Manley microphone.',
+  }}
 />
 
 It’s a space for those who have connected with my music. Somewhere I can share things that don’t fit neatly into a social media post.
@@ -78,12 +84,6 @@ I’ve always struggled with how to share all the different creative sides of my
 I’ve noticed certain patterns across the different things I’ve worked on. Lessons from songwriting that apply to design. Lessons from design that apply to life.
 
 Like how the feeling you get when you craft the right hook can feel eerily similar to placing the right pixels. How it’s way easier to begin projects than finish them. How being vulnerable makes you a better songwriter, designer, and dad.
-
-<MarginPhoto
-  src={mic}
-  alt="A condenser microphone with a red ring in a shock mount, in front of a foam vocal shield, with a pop filter beside it."
-  caption="In the studio recording using my Manley microphone."
-/>
 
 I’m certainly no expert. I’m learning as I go. But maybe sharing what I’m learning can help someone else along the way.
 
