@@ -20,7 +20,7 @@ const { number, date, location, description, cover, coverAlt } = issue.data;
 const dateline = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 const social = await getImage({ src: cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
 ---
-<Base title={`Field Notes No. ${number}`} description={description} bodyClass="field-notes" image={social.src} type="article">
+<Base title={`Field Notes No. ${number}`} description={description} bodyClass="field-notes" image={social.src} type="article" header={false}>
   <article class="fn">
     <div class="fn-cover">
       <h1 class="visually-hidden">Field Notes No. {number}</h1>

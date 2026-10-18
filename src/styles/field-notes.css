@@ -131,32 +131,25 @@ figcaption {
   }
 }
 
-/* ---------- Voice memo list ---------- */
+/* ---------- Voice memo list: typed lines, list spacing ---------- */
 .fn-memos {
   list-style: none;
   padding: 0;
-  margin-top: 0.25rem;
-  margin-bottom: var(--fn-s2);
-  border-top: 1px solid var(--fn-rule);
+  margin-top: 0;
+  margin-bottom: 1.1em;
 }
-.fn-memos li { border-bottom: 1px solid var(--fn-rule); }
-.fn-memos a,
-.fn-memos__row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 1rem;
-  padding: 0.8rem 0;
-  color: inherit;
-  text-decoration: none;
-}
-.fn-memos__date { color: var(--fn-muted); font-size: 0.85em; white-space: nowrap; }
-.fn-memos a .fn-memos__title { color: var(--fn-red); }
-.fn-memos a .fn-memos__title::before { content: '\25B6\FE0E\00a0'; font-size: 0.7em; vertical-align: 0.12em; }
-.fn-memos a:hover .fn-memos__title { text-decoration: underline; text-underline-offset: 0.2em; }
+.fn-memos li { margin: 0; }
+.fn-memos__date { white-space: nowrap; }
 
 /* ---------- Demo player ---------- */
-.fn-demo { margin-top: var(--fn-s2); margin-bottom: var(--fn-s2); scroll-margin-top: 30vh; }
+.fn-demo { margin-top: var(--fn-s2); margin-bottom: var(--fn-s2); }
+/* The player runs wider than the text column on larger screens */
+.fn-body > .fn-demo {
+  --fn-demo-out: clamp(0rem, 6vw, 6rem);
+  max-width: calc(var(--fn-text) + 2 * var(--fn-demo-out));
+  margin-left: max(0px, calc(50% - var(--fn-text) / 2 - var(--fn-shift) - var(--fn-demo-out)));
+}
+@media (max-width: 700px) { .fn-body > .fn-demo { --fn-demo-out: 0rem; } }
 .fn-demo__bar {
   display: grid;
   grid-template-columns: auto auto 1fr;
@@ -233,6 +226,21 @@ figcaption {
   /* full-bleed photo on phones and tablets */
   .fn-spread__figure { margin-inline: calc(-1 * var(--fn-gutter)); }
   .fn-spread__figure figcaption { padding-inline: var(--fn-gutter); }
+}
+
+/* ---------- Break: photo interrupts the text, bleeding off the left edge ---------- */
+.fn-break-left { margin: var(--fn-s3) 0 var(--fn-s3) calc(-1 * var(--fn-gutter)); clear: both; }
+.fn-break-left img { display: block; width: 100%; height: auto; }
+.fn-break-left figcaption { padding-left: var(--fn-gutter); }
+@media (min-width: 1100px) {
+  .fn-break-left {
+    /* from the window edge to just past the middle of the text column */
+    width: calc(50% + var(--fn-gutter) - var(--fn-shift) + 2rem);
+    max-width: 52rem;
+  }
+}
+@media (max-width: 1099px) {
+  .fn-break-left { margin-right: calc(-1 * var(--fn-gutter)); }
 }
 
 /* ---------- Wide photo ---------- */
