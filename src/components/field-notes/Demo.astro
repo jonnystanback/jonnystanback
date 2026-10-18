@@ -1,10 +1,12 @@
 ---
-// Audio player for a demo / voice memo. Plays inline; the waveform fills
-// as it plays and can be clicked to jump around.
+// Audio player for a demo / voice memo.
+// Plays inline; the waveform fills as it plays and can be clicked to seek.
+// While it's playing and you scroll past it, a slim version docks to the
+// bottom of the screen so you can keep reading.
 interface Props {
-  id: string;          // anchor, e.g. "something-divine" (memo list links here)
+  id: string;          // anchor, e.g. "something-divine"
   title: string;
-  src: string;         // path under /public, e.g. /field-notes/001/something-divine.m4a
+  src: string;         // path under /public, e.g. /field-notes/001/something-divine.mp3
   note?: string;       // small line under the player
   peaks?: number[];    // waveform bar heights (0-100) measured from the audio
   kind?: string;       // label after the title, e.g. "Demo" or "Voice memo"
@@ -19,12 +21,14 @@ const bars = peaks ?? Array.from({ length: BARS }, (_, i) => {
   const swell = 0.55 + 0.45 * Math.sin((i / BARS) * Math.PI);
   return Math.round((0.25 + rand() * 0.75) * swell * 100);
 });
+const playIcon = 'M6.5 4.5v15l12.5-7.5z';
+const pauseIcon = 'M6.5 4.5h3.5v15h-3.5zM14 4.5h3.5v15h-3.5z';
 ---
 <figure class="fn-demo" id={id} data-demo>
   <div class="fn-demo__bar">
     <button class="fn-demo__play" type="button" aria-label={`Play ${title}`} data-play>
-      <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 4.5v15l12.5-7.5z" /></svg>
-      <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 4.5h3.5v15h-3.5zM14 4.5h3.5v15h-3.5z" /></svg>
+      <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d={playIcon} /></svg>
+      <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d={pauseIcon} /></svg>
     </button>
     <div class="fn-demo__meta">
       <span class="fn-demo__title">{title} – {kind}</span>
@@ -36,6 +40,17 @@ const bars = peaks ?? Array.from({ length: BARS }, (_, i) => {
   </div>
   {note && <figcaption>{note}</figcaption>}
   <audio preload="metadata" src={src} data-audio></audio>
+
+  <!-- Docked mini player: shown only while playing and scrolled away -->
+  <div class="fn-dock" data-dock aria-hidden="true">
+    <button class="fn-dock__play" type="button" tabindex="-1" data-dock-play aria-label={`Pause ${title}`}>
+      <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d={playIcon} /></svg>
+      <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d={pauseIcon} /></svg>
+    </button>
+    <a class="fn-dock__title" href={`#${id}`} tabindex="-1">{title} – {kind}</a>
+    <span class="fn-dock__time" data-dock-time></span>
+    <span class="fn-dock__progress" data-dock-progress></span>
+  </div>
 </figure>
 
 <script>
@@ -46,26 +61,56 @@ const bars = peaks ?? Array.from({ length: BARS }, (_, i) => {
     const play = root.querySelector<HTMLButtonElement>('[data-play]')!;
     const wave = root.querySelector<HTMLElement>('[data-wave]')!;
     const time = root.querySelector<HTMLElement>('[data-time]')!;
+    const bar = root.querySelector<HTMLElement>('.fn-demo__bar')!;
+    const dock = root.querySelector<HTMLElement>('[data-dock]')!;
+    const dockPlay = root.querySelector<HTMLButtonElement>('[data-dock-play]')!;
+    const dockTime = root.querySelector<HTMLElement>('[data-dock-time]')!;
+    const dockProgress = root.querySelector<HTMLElement>('[data-dock-progress]')!;
     const bars = [...wave.children] as HTMLElement[];
     const label = play.getAttribute('aria-label')!;
+    let inView = true;
 
     const paint = () => {
       const p = audio.duration ? audio.currentTime / audio.duration : 0;
       const lit = Math.round(p * bars.length);
       bars.forEach((b, i) => b.classList.toggle('on', i < lit));
       wave.setAttribute('aria-valuenow', String(Math.round(p * 100)));
-      if (audio.duration) time.textContent = root.classList.contains('has-started')
-        ? `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`
-        : fmt(audio.duration);
+      dockProgress.style.setProperty('--p', String(p));
+      if (audio.duration) {
+        const both = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
+        time.textContent = root.classList.contains('has-started') ? both : fmt(audio.duration);
+        dockTime.textContent = both;
+      }
     };
 
-    play.addEventListener('click', () => {
-      // Only one demo plays at a time.
+    // Dock when playing and the full player is off screen.
+    const updateDock = () => {
+      const show = root.classList.contains('has-started') && !inView && (!audio.paused || dock.classList.contains('is-shown'));
+      dock.classList.toggle('is-shown', show);
+      dock.setAttribute('aria-hidden', String(!show));
+      dock.querySelectorAll<HTMLElement>('button, a').forEach((el) => (el.tabIndex = show ? 0 : -1));
+    };
+    new IntersectionObserver(([e]) => { inView = e.isIntersecting; updateDock(); }).observe(bar);
+
+    const toggle = () => {
       document.querySelectorAll<HTMLAudioElement>('[data-audio]').forEach((a) => a !== audio && a.pause());
       audio.paused ? audio.play() : audio.pause();
+    };
+    play.addEventListener('click', toggle);
+    dockPlay.addEventListener('click', toggle);
+
+    audio.addEventListener('play', () => {
+      root.classList.add('is-playing', 'has-started');
+      play.setAttribute('aria-label', label.replace('Play', 'Pause'));
+      dockPlay.setAttribute('aria-label', label.replace('Play', 'Pause'));
+      updateDock();
     });
-    audio.addEventListener('play', () => { root.classList.add('is-playing', 'has-started'); play.setAttribute('aria-label', label.replace('Play', 'Pause')); });
-    audio.addEventListener('pause', () => { root.classList.remove('is-playing'); play.setAttribute('aria-label', label); });
+    audio.addEventListener('pause', () => {
+      root.classList.remove('is-playing');
+      play.setAttribute('aria-label', label);
+      dockPlay.setAttribute('aria-label', label);
+    });
+    audio.addEventListener('ended', () => { dock.classList.remove('is-shown'); updateDock(); });
     audio.addEventListener('timeupdate', paint);
     audio.addEventListener('loadedmetadata', paint);
     audio.addEventListener('error', () => { root.classList.add('is-unavailable'); time.textContent = 'Audio coming soon'; });

@@ -17,13 +17,16 @@ const { issue } = Astro.props;
 const { Content } = await render(issue);
 const { number, date, location, description, cover, coverAlt } = issue.data;
 
-const dateline = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+// Dateline as typed: 10-21-26
+const pad = (n: number) => String(n).padStart(2, '0');
+const dateline = `${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())}-${String(date.getUTCFullYear()).slice(-2)}`;
+const coverRatio = (cover.height / cover.width).toFixed(4);
 const social = await getImage({ src: cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
 ---
 <Base title={`Field Notes No. ${number}`} description={description} bodyClass="field-notes" image={social.src} type="article" header={false}>
-  <article class="fn">
+  <article class="fn" style={`--fn-cover-ratio:${coverRatio}`}>
+    <!-- The cover holds in place while the letter slides up over it -->
     <div class="fn-cover">
-      <h1 class="visually-hidden">Field Notes No. {number}</h1>
       <Image
         src={cover}
         alt={coverAlt}
@@ -35,21 +38,23 @@ const social = await getImage({ src: cover, width: 1200, height: 630, fit: 'cove
       />
     </div>
 
-    <div class="fn-dateline">
-      <time datetime={date.toISOString().slice(0, 10)}>{dateline}</time>
-      <span>Field Notes No. {number}</span>
-      <span>{location}</span>
-    </div>
+    <div class="fn-sheet">
+      <div class="fn-dateline">
+        <time datetime={date.toISOString().slice(0, 10)}>{dateline}</time>
+        <span>{location}</span>
+      </div>
 
-    <div class="fn-body">
-      <Content />
-    </div>
+      <div class="fn-body">
+        <h1 class="fn-title">Field Notes No. {number}</h1>
+        <Content />
+      </div>
 
-    <aside class="fn-subscribe" aria-labelledby="fn-subscribe-title">
-      <h2 id="fn-subscribe-title">Get the next letter</h2>
-      <p>Field Notes arrives once a month: unreleased songs, stories from the studio, and whatever I’m working through.</p>
-      <a class="fn-subscribe__button" href="https://laylo.com/jonnystanback" target="_blank" rel="noopener">Subscribe to Field Notes</a>
-      <p class="fn-subscribe__small">Already subscribed? Reply to any letter and it comes straight to me.</p>
-    </aside>
+      <aside class="fn-subscribe" aria-labelledby="fn-subscribe-title">
+        <h2 id="fn-subscribe-title">Get the next letter</h2>
+        <p>Field Notes arrives once a month: unreleased songs, stories from the studio, and whatever I’m working through.</p>
+        <a class="fn-subscribe__button" href="https://laylo.com/jonnystanback" target="_blank" rel="noopener">Subscribe to Field Notes</a>
+        <p class="fn-subscribe__small">Already subscribed? Reply to any letter and it comes straight to me.</p>
+      </aside>
+    </div>
   </article>
 </Base>
