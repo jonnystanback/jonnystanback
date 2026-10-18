@@ -36,10 +36,10 @@ body.field-notes {
   --fn-s3: clamp(3rem, 6vw, 4.5rem);
   --fn-s4: clamp(4rem, 9vw, 7rem);
 
-  --fn-paper-texture: url('/field-notes/paper.webp');
+  --fn-paper-texture: url('/field-notes/paper.jpg');
 
-  background: var(--fn-paper) var(--fn-paper-texture) repeat;
-  background-size: 640px;
+  background: var(--fn-paper) var(--fn-paper-texture) repeat-y;
+  background-size: 100% auto;
   background-blend-mode: multiply;
   color: var(--fn-ink);
   font-family: var(--fn-type);
@@ -69,9 +69,10 @@ body.field-notes {
 .fn-sheet {
   position: relative;
   z-index: 1;
-  /* paper: cream with a faint grain and a few fibers */
-  background: var(--fn-paper) var(--fn-paper-texture) repeat;
-  background-size: 640px;
+  /* paper: a scanned sheet, repeated down the page */
+  background: var(--fn-paper) var(--fn-paper-texture) repeat-y;
+  background-size: max(100%, 900px) auto;
+  background-position: center top;
   background-blend-mode: multiply;
   overflow-x: clip;   /* trims images that run off the page edges */
 }
@@ -287,7 +288,22 @@ figcaption {
   .fn-body {
     width: min(100% - 2 * var(--fn-gutter), var(--fn-text) + var(--fn-gap) + var(--fn-mw));
     font-size: 1.25rem;
+    position: relative;
   }
+  /* thin red rule between the writing and the margin, like a legal pad */
+  .fn-body::before {
+    content: '';
+    position: absolute;
+    top: var(--fn-s3);
+    bottom: 0;
+    left: calc(var(--fn-text) + var(--fn-gap) / 2);
+    width: 1px;
+    background: var(--fn-red);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  /* photos and the player sit on top of the rule */
+  .fn-pair, .fn-wide, .fn-body > .fn-demo { position: relative; z-index: 1; }
   .fn-body > p,
   .fn-body > .fn-memos,
   .fn-body > .fn-signoff,
