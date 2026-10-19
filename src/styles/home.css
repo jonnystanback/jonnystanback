@@ -58,6 +58,8 @@ body.hp {
   letter-spacing: 0.005em;
   white-space: nowrap;
   text-align: center;
+  /* softer, more worn than the menu (scales with the type) */
+  filter: blur(max(1.4px, 0.11vw));
 }
 
 .hp-horse {
