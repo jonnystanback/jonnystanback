@@ -165,9 +165,10 @@ body.hp {
   .hp-name,
   .hp-nav a {
     filter: none;
-    text-shadow: 0 0 0.088px var(--hp-red);
+    text-shadow: 0 0 1px var(--hp-red), 0 0 2.5px rgba(228, 16, 16, 0.4);
   }
   .hp-horse, .hp-intro__tag { filter: none; }
+  .hp-intro__tag { text-shadow: 0 0 0.8px var(--hp-red), 0 0 1.6px rgba(228, 16, 16, 0.3); }
 
   .hp-name {
     white-space: normal;

@@ -87,7 +87,7 @@ body.field-notes {
   transition: color 0.2s ease;
 }
 .fn-back:hover, .fn-back:focus-visible { color: #4DA2AF; }
-@media (max-width: 640px) { .fn-back { filter: none; text-shadow: 0 0 0.088px currentColor; } }
+@media (max-width: 640px) { .fn-back { filter: none; text-shadow: 0 0 0.8px currentColor, 0 0 1.6px rgba(251, 246, 236, 0.35); } }
 
 .fn-sheet {
   position: relative;
