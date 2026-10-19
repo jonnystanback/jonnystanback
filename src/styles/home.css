@@ -159,15 +159,15 @@ body.hp {
 
 /* ---------- Phones ---------- */
 @media (max-width: 640px) {
-  /* phones: a much lighter touch. The same blur reads far heavier on small
-     type and dense screens, so the worn look is kept just at the edges. */
+  /* phones: no CSS blur filter at all. iPhone Safari redraws anything with a
+     filter at low resolution, so even a tiny blur looks soft. A faint ink
+     edge (text-shadow) keeps the worn feel without that. */
   .hp-name,
   .hp-nav a {
-    filter: blur(0.088px);
-    text-shadow: 0 0 0.176px var(--hp-red);
+    filter: none;
+    text-shadow: 0 0 0.088px var(--hp-red);
   }
-  .hp-horse { filter: none; }
-  .hp-intro__tag { filter: blur(0.132px); }
+  .hp-horse, .hp-intro__tag { filter: none; }
 
   .hp-name {
     white-space: normal;
