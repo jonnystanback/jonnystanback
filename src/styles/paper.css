@@ -86,7 +86,7 @@ body.paper {
   transition: transform 0.25s ease;
 }
 .pp-folder img { display: block; width: 100%; height: auto; }
-.pp-folder:hover { transform: translateY(-6px) rotate(-1deg); }
+.pp-folder:hover, .pp-folder:focus-visible { transform: scale(0.96); }
 .pp-folder__label { display: block; text-align: center; margin-top: 1rem; font-size: 0.85rem; }
 
 /* ---------- About ---------- */
