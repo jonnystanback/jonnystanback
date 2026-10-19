@@ -73,7 +73,7 @@ body.field-notes {
   left: 50%;
   translate: -50% 0;
   z-index: 2;
-  font-family: 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Arial Narrow', 'Archivo Narrow', sans-serif;
   font-stretch: condensed;
   font-weight: 700;
   font-size: clamp(0.8rem, 1vw, 0.95rem);
@@ -83,6 +83,7 @@ body.field-notes {
   text-decoration: none;
   white-space: nowrap;
   color: #FBF6EC;
+  filter: blur(0.4px);
   transition: color 0.2s ease;
 }
 .fn-back:hover, .fn-back:focus-visible { color: #4DA2AF; }

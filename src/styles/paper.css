@@ -9,17 +9,21 @@ body.paper {
   background: var(--pp-paper) url('/field-notes/paper.jpg') repeat-y center top / max(100%, 900px) auto;
   background-blend-mode: multiply;
   color: var(--pp-red);
-  font-family: 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Arial Narrow', 'Archivo Narrow', sans-serif;
   min-height: 100vh;
 }
 .pp { min-height: 100vh; display: flex; flex-direction: column; }
 
 /* soft, slightly spread ink for all red type */
-.pp-headline,
+.pp-headline {
+  filter: blur(0.28px);
+  text-shadow: 0 0 0.75px currentColor;
+}
+/* the narrow sans: a little softer than the headline */
 .pp-nav a,
 .pp-type {
-  filter: blur(0.38px);
-  text-shadow: 0 0 1px currentColor;
+  filter: blur(0.5px);
+  text-shadow: 0 0 0.5px currentColor;
 }
 
 /* ---------- Nav ---------- */
@@ -65,7 +69,7 @@ body.paper {
 /* ---------- Shared bits ---------- */
 .pp-col { max-width: var(--pp-col); margin-inline: auto; }
 .pp-type {
-  font-family: 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Arial Narrow', 'Archivo Narrow', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--pp-red);
@@ -145,8 +149,8 @@ body.paper {
 
 /* ---------- Phones ---------- */
 @media (max-width: 640px) {
-  .pp-headline { filter: blur(0.3px); text-shadow: 0 0 0.5px currentColor; }
-  .pp-nav a, .pp-type { filter: none; text-shadow: none; }
+  .pp-headline { filter: blur(0.2px); text-shadow: 0 0 0.4px currentColor; }
+  .pp-nav a, .pp-type { filter: blur(0.3px); text-shadow: none; }
   .pp-nav { gap: 1rem; }
   .pp-nav ul { justify-content: flex-end; flex-wrap: wrap; gap: 0.35rem 1rem; }
   .pp-headline { font-size: 22vw; }

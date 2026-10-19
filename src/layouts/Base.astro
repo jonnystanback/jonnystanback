@@ -3,6 +3,8 @@
 // Every page uses this, so the nav and meta tags live in one place.
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+// Arial Narrow isn't on iPhones/Android; Archivo Narrow Bold stands in there
+import '@fontsource/archivo-narrow/700.css';
 
 interface Props {
   title?: string;          // page name, e.g. "Music"

@@ -46,8 +46,8 @@ body.hp {
   font-weight: normal;
   color: var(--hp-red);
   text-transform: uppercase;
-  filter: blur(0.47px);
-  text-shadow: 0 0 1px var(--hp-red), 0 0 5px rgba(228, 16, 16, 0.22);
+  filter: blur(0.35px);
+  text-shadow: 0 0 0.75px var(--hp-red), 0 0 4px rgba(228, 16, 16, 0.18);
 }
 
 .hp-name {
@@ -59,7 +59,7 @@ body.hp {
   white-space: nowrap;
   text-align: center;
   /* softer, more worn than the menu (scales with the type) */
-  filter: blur(max(0.95px, 0.07vw));
+  filter: blur(max(0.7px, 0.05vw));
 }
 
 .hp-horse {
@@ -79,13 +79,13 @@ body.hp {
 .hp-intro__tag {
   position: absolute; right: calc(var(--hp-gutter) * 2.5); bottom: clamp(1.25rem, 5vh, 3rem);
   margin: 0;
-  font-family: 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Arial Narrow', 'Archivo Narrow', sans-serif;
   font-weight: 700;
   font-size: clamp(0.62rem, 0.85vw, 0.8rem);
   line-height: 1.05;
   text-transform: uppercase;
   color: var(--hp-red);
-  filter: blur(0.3px);
+  filter: blur(0.5px);
 }
 
 /* small scroll cue */
@@ -163,10 +163,11 @@ body.hp {
      type and dense screens, so the worn look is kept just at the edges. */
   .hp-name,
   .hp-nav a {
-    filter: blur(0.3px);
-    text-shadow: 0 0 0.5px var(--hp-red);
+    filter: blur(0.2px);
+    text-shadow: 0 0 0.4px var(--hp-red);
   }
-  .hp-horse, .hp-intro__tag { filter: none; }
+  .hp-horse { filter: none; }
+  .hp-intro__tag { filter: blur(0.3px); }
 
   .hp-name {
     white-space: normal;
