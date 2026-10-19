@@ -150,8 +150,8 @@ body.paper {
 /* ---------- Phones ---------- */
 @media (max-width: 640px) {
   /* no filter on phones (Safari renders filtered text soft); faint ink edge only */
-  .pp-headline { filter: none; text-shadow: 0 0 1px currentColor, 0 0 2.5px rgba(228, 16, 16, 0.4); }
-  .pp-nav a, .pp-type { filter: none; text-shadow: 0 0 0.8px currentColor, 0 0 1.6px rgba(228, 16, 16, 0.3); }
+  .pp-headline { filter: none; text-shadow: 0 0 0.9px currentColor, 0 0 2.25px rgba(228, 16, 16, 0.36); }
+  .pp-nav a, .pp-type { filter: none; text-shadow: 0 0 0.72px currentColor, 0 0 1.44px rgba(228, 16, 16, 0.27); }
   .pp-nav { gap: 1rem; }
   .pp-nav ul { justify-content: flex-end; flex-wrap: wrap; gap: 0.35rem 1rem; }
   .pp-headline { font-size: 22vw; }
