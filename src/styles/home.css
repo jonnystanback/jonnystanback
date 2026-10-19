@@ -2,19 +2,22 @@
    Homepage
    ========================================================================== */
 body.hp {
-  --hp-red: #E14D3E;          /* the horse's red; name and menu match it */
+  --hp-red: #E41010;          /* one red for name, menu, horse and marks */
   --hp-gutter: clamp(1.25rem, 4vw, 3rem);
   --hp-radius: clamp(18px, 2.5vw, 32px);
   background: #1b2412;
 }
 
 /* ---------- 1. Intro ---------- */
+/* scrolls away on top, its rounded bottom lifting off the menu page beneath */
 .hp-intro {
-  position: sticky;
-  top: 0;
-  z-index: 0;
+  position: relative;
+  z-index: 1;
   height: 100svh;
   overflow: hidden;
+  border-radius: 0 0 var(--hp-radius) var(--hp-radius);
+  isolation: isolate;          /* keeps the video inside this card */
+  background: #1b2412;          /* shows until the video loads */
   display: grid;
   grid-template-rows: auto 1fr;
   justify-items: center;
@@ -43,7 +46,7 @@ body.hp {
   color: var(--hp-red);
   text-transform: uppercase;
   filter: blur(0.55px);
-  text-shadow: 0 0 1px var(--hp-red), 0 0 6px rgba(225, 77, 62, 0.25);
+  text-shadow: 0 0 1px var(--hp-red), 0 0 6px rgba(228, 16, 16, 0.25);
 }
 
 .hp-name {
@@ -86,11 +89,14 @@ body.hp {
 @keyframes hp-bob { 50% { translate: 0 6px; } }
 
 /* ---------- 2. Menu page ---------- */
+/* pinned to the bottom of the window underneath the intro, so it is
+   uncovered as the intro scrolls up */
 .hp-menu {
-  position: relative;
-  z-index: 1;
-  min-height: 100svh;
-  border-radius: var(--hp-radius) var(--hp-radius) 0 0;
+  position: sticky;
+  bottom: 0;
+  z-index: 0;
+  height: 100svh;
+  margin-top: calc(-1 * var(--hp-radius));   /* fills behind the rounded corners */
   overflow: hidden;
   display: flex;
   align-items: center;
