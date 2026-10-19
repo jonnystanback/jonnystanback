@@ -1,32 +1,22 @@
 ---
-import Base from '../layouts/Base.astro';
+import Paper from '../layouts/Paper.astro';
 
-// Add shows here and they'll render automatically. Leave empty for "No upcoming dates".
-// Example: { date: 'MAR 15', year: '2027', venue: 'The Roxy Theatre', city: 'Los Angeles, CA', tickets: 'https://...' }
-const shows: { date: string; year: string; venue: string; city: string; tickets: string }[] = [];
+// Add shows here and they'll list automatically. Leave empty for the "no dates" note.
+// Example: { date: 'Mar 15, 2027', venue: 'The Roxy Theatre', city: 'Los Angeles, CA', tickets: 'https://...' }
+const shows: { date: string; venue: string; city: string; tickets: string }[] = [];
 ---
-<Base title="Tour">
-  <div class="page-content">
-    <h1 class="page-title">TOUR</h1>
-
-    {shows.length === 0 ? (
-      <div class="no-dates">
-        <p>No upcoming dates</p>
-        <a href="https://laylo.com/jonnystanback" class="notify-btn" target="_blank">GET NOTIFIED</a>
-      </div>
-    ) : (
-      <div class="tour-list">
-        {shows.map((s) => (
-          <div class="tour-item">
-            <div class="tour-date">{s.date}<br />{s.year}</div>
-            <div class="tour-venue">
-              <h3>{s.venue}</h3>
-              <p>{s.city}</p>
-            </div>
-            <a href={s.tickets} class="tour-btn" target="_blank">TICKETS</a>
-          </div>
-        ))}
-      </div>
-    )}
-  </div>
-</Base>
+<Paper title="Tour">
+  {shows.length === 0 ? (
+    <p class="pp-tour-empty pp-type">No dates yet<br />Check back soon<br />for 2027 shows</p>
+  ) : (
+    <ul class="pp-tour pp-col">
+      {shows.map((s) => (
+        <li class="pp-type">
+          <span>{s.date}</span>
+          <span>{s.venue}<br /><small>{s.city}</small></span>
+          <a href={s.tickets} target="_blank" rel="noopener">Tickets</a>
+        </li>
+      ))}
+    </ul>
+  )}
+</Paper>

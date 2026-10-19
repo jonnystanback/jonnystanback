@@ -11,15 +11,15 @@ const menu = [
   { label: 'Tour', href: '/tour' },
   { label: 'Merch', href: '/merch' },
   { label: 'Field Notes', href: '/inthefield' },
+  { label: 'About', href: '/about' },
 ];
 ---
 <Base bodyClass="hp" header={false} footer={false}>
   <main class="hp-wrap">
     <!-- 1. Intro: video montage, name, running horse. Holds still while the menu page covers it. -->
     <section class="hp-intro" aria-label="Jonny Stanback">
-      <video class="hp-intro__video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
-        <!-- placeholder footage until the nature montage is ready: swap for /home/montage.mp4 -->
-        <source src="/jonnyvideo.mp4" type="video/mp4" />
+      <video class="hp-intro__video" autoplay muted loop playsinline preload="auto" poster="/home/montage-poster.jpg" aria-hidden="true">
+        <source src="/home/montage.mp4" type="video/mp4" />
       </video>
       <div class="hp-intro__shade" aria-hidden="true"></div>
       <h1 class="hp-name">Jonny Stanback</h1>

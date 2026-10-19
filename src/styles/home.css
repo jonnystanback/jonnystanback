@@ -45,8 +45,8 @@ body.hp {
   font-weight: normal;
   color: var(--hp-red);
   text-transform: uppercase;
-  filter: blur(0.55px);
-  text-shadow: 0 0 1px var(--hp-red), 0 0 6px rgba(228, 16, 16, 0.25);
+  filter: blur(0.47px);
+  text-shadow: 0 0 1px var(--hp-red), 0 0 5px rgba(228, 16, 16, 0.22);
 }
 
 .hp-name {
@@ -63,7 +63,7 @@ body.hp {
   align-self: center;
   width: min(58vw, 60vh * 1.36, 1000px);
   margin-top: -2vh;
-  filter: blur(0.35px);
+  filter: blur(0.3px);
 }
 .hp-horse img { display: block; width: 100%; height: auto; }
 
@@ -118,18 +118,19 @@ body.hp {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: clamp(2rem, 9vh, 5.5rem);
+  gap: clamp(1.5rem, 6.5vh, 4.25rem);
   margin-right: clamp(0rem, 3vw, 3rem);
 }
 .hp-nav a {
   display: block;
-  font-size: clamp(2.2rem, 3.6vw, 3.6rem);
+  font-size: clamp(2.6rem, 4.6vw, 4.75rem);
   line-height: 1;
   text-decoration: none;
-  transition: filter 0.2s ease;
+  transition: color 0.2s ease;
 }
+/* hover: the red deepens a touch */
 .hp-nav a:hover,
-.hp-nav a:focus-visible { filter: blur(0); outline: none; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.hp-nav a:focus-visible { color: #A80B0B; outline: none; }
 
 .hp-mark { position: absolute; bottom: clamp(1.25rem, 4vh, 2.5rem); height: auto; }
 .hp-mark--horse { left: var(--hp-gutter); width: clamp(2.6rem, 4vw, 3.6rem); }
@@ -145,8 +146,8 @@ body.hp {
   .hp-horse { width: 92vw; margin-top: 0; }
   .hp-menu { align-items: flex-end; padding-bottom: 6.5rem; }
   .hp-menu__bg { object-position: 38% 50%; }
-  .hp-nav ul { gap: 1.4rem; margin-right: 0; }
-  .hp-nav a { font-size: 2.5rem; }
+  .hp-nav ul { gap: 1.1rem; margin-right: 0; }
+  .hp-nav a { font-size: 2.9rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
