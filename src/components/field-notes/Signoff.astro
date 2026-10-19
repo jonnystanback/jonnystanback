@@ -6,5 +6,6 @@ const { line = 'See you next month,' } = Astro.props;
 ---
 <div class="fn-signoff">
   <p>{line}</p>
-  <Image src={signature} alt="Jonny" width={190} class="fn-signoff__sig" />
+  <!-- served at 2-4x its display width so it stays sharp on high-res screens -->
+  <Image src={signature} alt="Jonny" widths={[380, 570, 760]} sizes="190px" format="png" class="fn-signoff__sig" />
 </div>

@@ -69,14 +69,18 @@ body.field-notes {
 
 .fn-sheet {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   /* paper: a scanned sheet, repeated down the page */
   background: var(--fn-paper) var(--fn-paper-texture) repeat-y;
   background-size: max(100%, 900px) auto;
   background-position: center top;
   background-blend-mode: multiply;
   overflow-x: clip;   /* trims images that run off the page edges */
+  /* bottom of the folder: rounded corners that lift off the footer */
+  border-radius: 0 0 var(--fn-sheet-r) var(--fn-sheet-r);
+  padding-bottom: var(--fn-s3);
 }
+.fn { --fn-sheet-r: clamp(16px, 2.5vw, 32px); }
 
 /* ---------- Folder tab on top of the sheet ---------- */
 .fn-sheet { --fn-tab-h: 3.1rem; --fn-tab-r: 16px; }
@@ -123,7 +127,7 @@ body.field-notes {
 
 /* ---------- Dateline ---------- */
 .fn-tab time { display: flex; align-items: center; }
-.fn-tab__date { display: block; height: 1.8rem; width: auto; }
+.fn-tab__date { display: block; height: 1.8rem; width: auto; margin-top: 0.55rem; }
 
 /* place line, set like the letter itself */
 .fn-dateline {
@@ -192,7 +196,7 @@ figcaption {
   line-height: 1.55;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--fn-muted);
+  color: var(--fn-ink);
 }
 
 /* ---------- Typed details inside the letter ---------- */
@@ -416,7 +420,7 @@ figcaption {
   .fn-sheet { --fn-tab-h: 2.6rem; --fn-tab-r: 12px; }
   .fn-tab { min-width: 11rem; padding: 0 1.5rem 4px; font-size: 1.7rem; }
   .fn-dateline { font-size: 1.01rem; }
-  .fn-tab__date { height: 1.45rem; }
+  .fn-tab__date { height: 1.45rem; margin-top: 0.4rem; }
   /* phones: crop the footer art to its text side so the words stay readable
      (left 1367px of 3038; button keeps its spot within that crop) */
   .fn-subscribe .fn-subscribe__art { aspect-ratio: 1367 / 1427; object-fit: cover; object-position: left center; }
@@ -433,10 +437,18 @@ figcaption {
 }
 
 /* ---------- Subscribe ---------- */
+/* The footer sits pinned to the bottom of the window, under the sheet, so it
+   is uncovered as the end of the letter scrolls away. Its wrapper reaches one
+   screen up behind the sheet, which limits the pinning to that last screen
+   (so it never shows over the cover at the top of the page). */
+.fn-end { margin-top: -100vh; }
+.fn-end::before { content: ''; display: block; height: 100vh; }
 .fn-subscribe {
-  position: relative;
-  margin: var(--fn-s4) 0 0;
-  clear: both;
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  /* tucks under the sheet's rounded corners so the photo shows through them */
+  margin: calc(-1 * var(--fn-sheet-r)) 0 0;
   line-height: 0;
 }
 .fn-subscribe__art { display: block; width: 100%; height: auto; }
