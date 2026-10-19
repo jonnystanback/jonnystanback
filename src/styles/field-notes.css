@@ -423,7 +423,7 @@ figcaption {
   .fn-tab__date { height: 1.45rem; margin-top: 0.4rem; }
   /* phones: crop the footer art to its text side so the words stay readable
      (left 1367px of 3038; button keeps its spot within that crop) */
-  .fn-subscribe .fn-subscribe__art { aspect-ratio: 1367 / 1427; object-fit: cover; object-position: left center; }
+  .fn-subscribe .fn-subscribe__art { aspect-ratio: 1367 / 1572; object-fit: cover; object-position: left center; }
   .fn-subscribe .fn-subscribe__button { left: 14.7%; width: 54.57%; }
   .fn-demo__bar { grid-template-columns: auto 1fr; column-gap: 1rem; row-gap: 0.9rem; padding: 1rem 1.1rem; }
   .fn-demo__title { font-size: 0.92rem; white-space: normal; }
@@ -453,13 +453,13 @@ figcaption {
 }
 .fn-subscribe__art { display: block; width: 100%; height: auto; }
 /* invisible link laid exactly over the button drawn in the footer art
-   (art is 3038x1427; button spans x 201-947, y 929-1062) */
+   (art is 3038x1572; button spans x 201-947, y 1074-1207) */
 .fn-subscribe__button {
   position: absolute;
   left: 6.62%;
-  top: 65.1%;
+  top: 68.32%;
   width: 24.56%;
-  height: 9.32%;
+  height: 8.46%;
   font-size: 0;
   color: transparent;
   border-radius: 2px;
