@@ -16,14 +16,14 @@ body.paper {
 
 /* soft, slightly spread ink for all red type */
 .pp-headline {
-  filter: blur(0.123px);
-  text-shadow: 0 0 0.33px currentColor;
+  filter: blur(0.38px);
+  text-shadow: 0 0 1px currentColor;
 }
 /* the narrow sans: a little softer than the headline */
 .pp-nav a,
 .pp-type {
-  filter: blur(0.22px);
-  text-shadow: 0 0 0.22px currentColor;
+  filter: blur(0.38px);
+  text-shadow: 0 0 1px currentColor;
 }
 
 /* ---------- Nav ---------- */
