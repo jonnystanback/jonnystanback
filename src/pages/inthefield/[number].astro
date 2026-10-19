@@ -39,15 +39,20 @@ const social = await getImage({ src: cover, width: 1200, height: 630, fit: 'cove
       />
     </div>
 
+    <!-- Folder tab on the top edge of the sheet, with the date written on it.
+         It lives outside the sheet so the sheet's side clipping (for photos that
+         bleed off the page) can never clip it — Safari clips both directions. -->
+    <div class="fn-tabrow">
+        <div class="fn-tab">
+          <time datetime={date.toISOString().slice(0, 10)}>
+            {dateImage
+              ? <Image src={dateImage} alt={dateline} widths={[200, 400]} sizes="9rem" class="fn-tab__date" />
+              : dateline}
+          </time>
+        </div>
+    </div>
+
     <div class="fn-sheet">
-      <!-- folder tab on the top edge of the sheet, with the date typed on it -->
-      <div class="fn-tab">
-        <time datetime={date.toISOString().slice(0, 10)}>
-          {dateImage
-            ? <Image src={dateImage} alt={dateline} widths={[200, 400]} sizes="9rem" class="fn-tab__date" />
-            : dateline}
-        </time>
-      </div>
       <div class="fn-dateline">
         <span>{location}</span>
       </div>

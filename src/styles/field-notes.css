@@ -83,11 +83,13 @@ body.field-notes {
 .fn { --fn-sheet-r: clamp(16px, 2.5vw, 32px); }
 
 /* ---------- Folder tab on top of the sheet ---------- */
-.fn-sheet { --fn-tab-h: 3.1rem; --fn-tab-r: 16px; }
+.fn { --fn-tab-h: 3.1rem; --fn-tab-r: 16px; }
+/* zero-height row sitting on the sheet's top edge; the tab hangs up from it */
+.fn-tabrow { position: relative; z-index: 3; height: 0; }
 .fn-tab {
   position: absolute;
   /* overlaps the sheet a few px so no seam can show between them */
-  bottom: calc(100% - 4px);
+  bottom: -4px;
   left: calc(var(--fn-gutter) + var(--fn-tab-r));
   min-width: 17rem;
   height: calc(var(--fn-tab-h) + 4px);
@@ -417,7 +419,7 @@ figcaption {
   /* a narrow monospace column justifies with big holes, so phones stay ragged */
   .fn-body > p { text-align: left; hyphens: manual; -webkit-hyphens: manual; }
   .fn-body { font-size: 1.0625rem; line-height: 1.5; }
-  .fn-sheet { --fn-tab-h: 2.6rem; --fn-tab-r: 12px; }
+  .fn { --fn-tab-h: 2.6rem; --fn-tab-r: 12px; }
   .fn-tab { min-width: 11rem; padding: 0 1.5rem 4px; font-size: 1.7rem; }
   .fn-dateline { font-size: 1.01rem; }
   .fn-tab__date { height: 1.45rem; margin-top: 0.4rem; }
