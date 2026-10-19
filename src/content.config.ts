@@ -13,6 +13,7 @@ const issues = defineCollection({
       location: z.string(),            // "Santa Barbara, CA"
       description: z.string(),         // used for link previews and the archive
       cover: image(),                  // full-bleed cover photo (masthead included)
+      coverMobile: image().optional(), // tall version of the cover for phones
       coverAlt: z.string(),
       dateImage: image().optional(),   // the date handwritten for the folder tab (transparent PNG)
       draft: z.boolean().default(false),
