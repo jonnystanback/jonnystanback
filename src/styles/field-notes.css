@@ -66,6 +66,34 @@ body.field-notes {
   z-index: 0;
 }
 .fn-cover__img { display: block; width: 100%; height: auto; }
+/* small way back to the Field Notes folder, over the cover */
+.fn-back {
+  position: absolute;
+  top: clamp(0.9rem, 2vw, 1.5rem);
+  left: var(--fn-gutter);
+  z-index: 2;
+  font-family: 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #E41010;
+  filter: blur(0.38px);
+  transition: color 0.2s ease;
+}
+.fn-back:hover, .fn-back:focus-visible { color: #4DA2AF; }
+/* phones: the masthead fills the top edge, so the link sits on a paper chip */
+@media (max-width: 640px) {
+  .fn-back {
+    top: 0.6rem; left: 0.6rem;
+    padding: 0.3rem 0.55rem;
+    font-size: 0.75rem;
+    background: var(--fn-paper);
+    border-radius: 4px;
+    filter: none;
+  }
+}
 
 .fn-sheet {
   position: relative;
