@@ -59,7 +59,7 @@ body.hp {
   white-space: nowrap;
   text-align: center;
   /* softer, more worn than the menu (scales with the type) */
-  filter: blur(max(1.4px, 0.11vw));
+  filter: blur(max(0.95px, 0.07vw));
 }
 
 .hp-horse {
