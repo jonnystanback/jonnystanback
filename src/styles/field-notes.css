@@ -66,34 +66,26 @@ body.field-notes {
   z-index: 0;
 }
 .fn-cover__img { display: block; width: 100%; height: auto; }
-/* small way back to the Field Notes folder, over the cover */
+/* "Back to home" across the top of the footer art */
 .fn-back {
   position: absolute;
-  top: clamp(0.9rem, 2vw, 1.5rem);
-  left: var(--fn-gutter);
+  top: calc(var(--fn-sheet-r) + clamp(1rem, 2.5vw, 2rem));
+  left: 50%;
+  translate: -50% 0;
   z-index: 2;
   font-family: 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  font-stretch: condensed;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: clamp(0.8rem, 1vw, 0.95rem);
+  line-height: 1;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   text-decoration: none;
-  color: #E41010;
-  filter: blur(0.38px);
+  white-space: nowrap;
+  color: #FBF6EC;
   transition: color 0.2s ease;
 }
 .fn-back:hover, .fn-back:focus-visible { color: #4DA2AF; }
-/* phones: the masthead fills the top edge, so the link sits on a paper chip */
-@media (max-width: 640px) {
-  .fn-back {
-    top: 0.6rem; left: 0.6rem;
-    padding: 0.3rem 0.55rem;
-    font-size: 0.75rem;
-    background: var(--fn-paper);
-    border-radius: 4px;
-    filter: none;
-  }
-}
 
 .fn-sheet {
   position: relative;
