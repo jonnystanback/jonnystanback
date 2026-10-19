@@ -1,9 +1,10 @@
 ---
-// Homepage: a nature montage with the running horse and the name over it,
+// Homepage: a prairie photo with the running horse and the name over it,
 // then the menu page slides up over it like the next sheet in the folder.
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import hero from '../assets/home/hero2.jpg';
+import field from '../assets/home/field.jpg';
 import '../styles/home.css';
 
 const menu = [
@@ -16,18 +17,16 @@ const menu = [
 ---
 <Base bodyClass="hp" header={false} footer={false}>
   <main class="hp-wrap">
-    <!-- 1. Intro: video montage, name, running horse. Holds still while the menu page covers it. -->
+    <!-- 1. Intro: prairie photo, name, running horse. Holds still while the menu page covers it. -->
     <section class="hp-intro" aria-label="Jonny Stanback">
-      <video class="hp-intro__video" autoplay muted loop playsinline preload="auto" poster="/home/montage-poster.jpg" aria-hidden="true">
-        <source src="/home/montage.mp4" type="video/mp4" />
-      </video>
-      <div class="hp-intro__shade" aria-hidden="true"></div>
+      <Image src={field} alt="" widths={[800, 1400, 2000, 2800, 3840]} sizes="100vw" loading="eager" fetchpriority="high" class="hp-intro__video" />
       <h1 class="hp-name">Jonny Stanback</h1>
       <picture class="hp-horse">
         <source srcset="/home/horse-still.webp" media="(prefers-reduced-motion: reduce)" />
         <img src="/home/horse.webp" alt="" width="1000" height="735" />
       </picture>
-      <a class="hp-cue" href="#menu" aria-label="Scroll to menu"><span></span></a>
+      <img class="hp-intro__ts" src="/home/ts.png" alt="" />
+      <p class="hp-intro__tag">The official website of<br />the musician Jonny<br />Stanback.</p>
     </section>
 
     <!-- 2. Menu page -->

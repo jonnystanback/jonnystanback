@@ -28,6 +28,7 @@ body.hp {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 60%;
   z-index: -2;
 }
 /* a light wash so the red reads on bright footage */
@@ -50,7 +51,7 @@ body.hp {
 }
 
 .hp-name {
-  margin: clamp(0.75rem, 2.5vh, 2rem) var(--hp-gutter) 0;
+  margin: clamp(1.5rem, 5vh, 3.5rem) var(--hp-gutter) 0;
   /* spans the width of the screen */
   font-size: min(18vw, 34vh);
   line-height: 0.9;
@@ -61,11 +62,28 @@ body.hp {
 
 .hp-horse {
   align-self: center;
-  width: min(58vw, 60vh * 1.36, 1000px);
-  margin-top: -2vh;
+  width: min(56vw, 62vh * 1.36, 1050px);
+  margin-top: 2vh;
   filter: blur(0.3px);
 }
 .hp-horse img { display: block; width: 100%; height: auto; }
+
+/* corner marks */
+.hp-intro__ts {
+  position: absolute; left: var(--hp-gutter); bottom: clamp(1.25rem, 5vh, 3rem);
+  width: clamp(2.6rem, 3.4vw, 3.4rem); height: auto;
+}
+.hp-intro__tag {
+  position: absolute; right: calc(var(--hp-gutter) * 2.5); bottom: clamp(1.25rem, 5vh, 3rem);
+  margin: 0;
+  font-family: 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.62rem, 0.85vw, 0.8rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--hp-red);
+  filter: blur(0.3px);
+}
 
 /* small scroll cue */
 .hp-cue {
@@ -144,6 +162,8 @@ body.hp {
     line-height: 0.86;
   }
   .hp-horse { width: 92vw; margin-top: 0; }
+  .hp-intro__video { object-position: 42% 60%; }
+  .hp-intro__tag { right: var(--hp-gutter); }
   .hp-menu { align-items: flex-end; padding-bottom: 6.5rem; }
   .hp-menu__bg { object-position: 38% 50%; }
   .hp-nav ul { gap: 1.1rem; margin-right: 0; }
