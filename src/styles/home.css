@@ -1,0 +1,148 @@
+/* ==========================================================================
+   Homepage
+   ========================================================================== */
+body.hp {
+  --hp-red: #E14D3E;          /* the horse's red; name and menu match it */
+  --hp-gutter: clamp(1.25rem, 4vw, 3rem);
+  --hp-radius: clamp(18px, 2.5vw, 32px);
+  background: #1b2412;
+}
+
+/* ---------- 1. Intro ---------- */
+.hp-intro {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  justify-items: center;
+}
+.hp-intro__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+/* a light wash so the red reads on bright footage */
+.hp-intro__shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.18), rgba(0,0,0,0) 35%, rgba(0,0,0,0.12));
+}
+
+/* worn-in red: soft edges, a little ink spread */
+.hp-name,
+.hp-nav a {
+  font-family: 'Neo Contact D', serif;
+  font-weight: normal;
+  color: var(--hp-red);
+  text-transform: uppercase;
+  filter: blur(0.55px);
+  text-shadow: 0 0 1px var(--hp-red), 0 0 6px rgba(225, 77, 62, 0.25);
+}
+
+.hp-name {
+  margin: clamp(0.75rem, 2.5vh, 2rem) var(--hp-gutter) 0;
+  /* spans the width of the screen */
+  font-size: min(18vw, 34vh);
+  line-height: 0.9;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.hp-horse {
+  align-self: center;
+  width: min(58vw, 60vh * 1.36, 1000px);
+  margin-top: -2vh;
+  filter: blur(0.35px);
+}
+.hp-horse img { display: block; width: 100%; height: auto; }
+
+/* small scroll cue */
+.hp-cue {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  translate: -50% 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+}
+.hp-cue span {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-right: 2px solid var(--hp-red);
+  border-bottom: 2px solid var(--hp-red);
+  rotate: 45deg;
+  animation: hp-bob 2.2s ease-in-out infinite;
+}
+@keyframes hp-bob { 50% { translate: 0 6px; } }
+
+/* ---------- 2. Menu page ---------- */
+.hp-menu {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+  border-radius: var(--hp-radius) var(--hp-radius) 0 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 6rem var(--hp-gutter) 7rem;
+}
+.hp-menu__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 40% 50%;
+}
+
+.hp-nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: clamp(2rem, 9vh, 5.5rem);
+  margin-right: clamp(0rem, 3vw, 3rem);
+}
+.hp-nav a {
+  display: block;
+  font-size: clamp(2.2rem, 3.6vw, 3.6rem);
+  line-height: 1;
+  text-decoration: none;
+  transition: filter 0.2s ease;
+}
+.hp-nav a:hover,
+.hp-nav a:focus-visible { filter: blur(0); outline: none; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+
+.hp-mark { position: absolute; bottom: clamp(1.25rem, 4vh, 2.5rem); height: auto; }
+.hp-mark--horse { left: var(--hp-gutter); width: clamp(2.6rem, 4vw, 3.6rem); }
+.hp-mark--ts { right: var(--hp-gutter); width: clamp(2.6rem, 3.6vw, 3.4rem); }
+
+/* ---------- Phones ---------- */
+@media (max-width: 640px) {
+  .hp-name {
+    white-space: normal;
+    font-size: 23vw;
+    line-height: 0.86;
+  }
+  .hp-horse { width: 92vw; margin-top: 0; }
+  .hp-menu { align-items: flex-end; padding-bottom: 6.5rem; }
+  .hp-menu__bg { object-position: 38% 50%; }
+  .hp-nav ul { gap: 1.4rem; margin-right: 0; }
+  .hp-nav a { font-size: 2.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-cue span { animation: none; }
+}

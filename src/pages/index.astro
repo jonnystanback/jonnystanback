@@ -1,22 +1,45 @@
 ---
+// Homepage: a nature montage with the running horse and the name over it,
+// then the menu page slides up over it like the next sheet in the folder.
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
----
-<Base bodyClass="home" footer={false}>
-  <Fragment slot="before-header">
-    <!-- Background Video -->
-    <video autoplay muted loop playsinline class="video-bg">
-      <source src="/jonnyvideo.mp4" type="video/mp4">
-    </video>
-    <!-- Overlay for slight darkening -->
-    <div class="video-overlay"></div>
-  </Fragment>
+import hero from '../assets/home/hero2.jpg';
+import '../styles/home.css';
 
-  <!-- Main Content -->
-  <main class="hero">
-    <div class="hero-content">
-      <a href="https://open.spotify.com/track/3JmNDTL4QLLXhffheGEugh?si=e4da7c05b2924ecf" target="_blank">
-        <img src="/textbanner.png" alt="Jonny Stanback" class="text-banner">
-      </a>
-    </div>
+const menu = [
+  { label: 'Music', href: '/music' },
+  { label: 'Tour', href: '/tour' },
+  { label: 'Merch', href: '/merch' },
+  { label: 'Field Notes', href: '/inthefield' },
+];
+---
+<Base bodyClass="hp" header={false} footer={false}>
+  <main class="hp-wrap">
+    <!-- 1. Intro: video montage, name, running horse. Holds still while the menu page covers it. -->
+    <section class="hp-intro" aria-label="Jonny Stanback">
+      <video class="hp-intro__video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+        <!-- placeholder footage until the nature montage is ready: swap for /home/montage.mp4 -->
+        <source src="/jonnyvideo.mp4" type="video/mp4" />
+      </video>
+      <div class="hp-intro__shade" aria-hidden="true"></div>
+      <h1 class="hp-name">Jonny Stanback</h1>
+      <picture class="hp-horse">
+        <source srcset="/home/horse-still.webp" media="(prefers-reduced-motion: reduce)" />
+        <img src="/home/horse.webp" alt="" width="1000" height="735" />
+      </picture>
+      <a class="hp-cue" href="#menu" aria-label="Scroll to menu"><span></span></a>
+    </section>
+
+    <!-- 2. Menu page -->
+    <section class="hp-menu" id="menu">
+      <Image src={hero} alt="Jonny sitting on a couch in a wood-paneled room." widths={[800, 1400, 2000, 3000]} sizes="100vw" class="hp-menu__bg" />
+      <nav class="hp-nav" aria-label="Main">
+        <ul>
+          {menu.map((m) => <li><a href={m.href}>{m.label}</a></li>)}
+        </ul>
+      </nav>
+      <img class="hp-mark hp-mark--horse" src="/horse.png" alt="" />
+      <img class="hp-mark hp-mark--ts" src="/home/ts.png" alt="" />
+    </section>
   </main>
 </Base>
