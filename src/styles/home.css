@@ -5,7 +5,7 @@ body.hp {
   --hp-red: #E41010;          /* one red for name, menu, horse and marks */
   --hp-gutter: clamp(1.25rem, 4vw, 3rem);
   --hp-radius: clamp(18px, 2.5vw, 32px);
-  background: #1b2412;
+  background: #F3EEE2;
 }
 
 /* ---------- 1. Intro ---------- */
@@ -17,7 +17,7 @@ body.hp {
   overflow: hidden;
   border-radius: 0 0 var(--hp-radius) var(--hp-radius);
   isolation: isolate;          /* keeps the video inside this card */
-  background: #1b2412;          /* shows until the video loads */
+  background: #F3EEE2;          /* shows until the video loads */
   display: grid;
   grid-template-rows: auto 1fr;
   justify-items: center;
