@@ -16,14 +16,14 @@ body.paper {
 
 /* soft, slightly spread ink for all red type */
 .pp-headline {
-  filter: blur(0.28px);
-  text-shadow: 0 0 0.75px currentColor;
+  filter: blur(0.123px);
+  text-shadow: 0 0 0.33px currentColor;
 }
 /* the narrow sans: a little softer than the headline */
 .pp-nav a,
 .pp-type {
-  filter: blur(0.5px);
-  text-shadow: 0 0 0.5px currentColor;
+  filter: blur(0.22px);
+  text-shadow: 0 0 0.22px currentColor;
 }
 
 /* ---------- Nav ---------- */
@@ -149,8 +149,8 @@ body.paper {
 
 /* ---------- Phones ---------- */
 @media (max-width: 640px) {
-  .pp-headline { filter: blur(0.2px); text-shadow: 0 0 0.4px currentColor; }
-  .pp-nav a, .pp-type { filter: blur(0.3px); text-shadow: none; }
+  .pp-headline { filter: blur(0.088px); text-shadow: 0 0 0.176px currentColor; }
+  .pp-nav a, .pp-type { filter: blur(0.132px); text-shadow: none; }
   .pp-nav { gap: 1rem; }
   .pp-nav ul { justify-content: flex-end; flex-wrap: wrap; gap: 0.35rem 1rem; }
   .pp-headline { font-size: 22vw; }

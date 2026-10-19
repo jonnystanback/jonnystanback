@@ -83,7 +83,7 @@ body.field-notes {
   text-decoration: none;
   white-space: nowrap;
   color: #FBF6EC;
-  filter: blur(0.4px);
+  filter: blur(0.176px);
   transition: color 0.2s ease;
 }
 .fn-back:hover, .fn-back:focus-visible { color: #4DA2AF; }
