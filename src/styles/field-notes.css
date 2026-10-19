@@ -436,8 +436,8 @@ figcaption {
   .fn-demo__bar { grid-template-columns: auto 1fr; column-gap: 1rem; row-gap: 0.9rem; padding: 1rem 1.1rem; }
   .fn-demo__title { font-size: 0.92rem; white-space: normal; }
   .fn-demo__wave { grid-column: 1 / -1; height: 2.1rem; }
-  /* the cover is short on phones; let it scroll normally */
-  .fn-cover { position: relative; top: 0; }
+  /* phones: the tall mobile cover holds still while the letter slides over it */
+  .fn-cover { top: min(0px, calc(100svh - 100vw * var(--fn-cover-ratio-m, var(--fn-cover-ratio, 0.66)))); }
 }
 
 @media (prefers-reduced-motion: reduce) {

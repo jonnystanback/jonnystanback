@@ -23,6 +23,7 @@ const { number, date, location, description, cover, coverMobile, coverAlt, dateI
 const pad = (n: number) => String(n).padStart(2, '0');
 const dateline = `${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())}-${String(date.getUTCFullYear()).slice(-2)}`;
 const coverRatio = (cover.height / cover.width).toFixed(4);
+const coverRatioM = ((coverMobile ?? cover).height / (coverMobile ?? cover).width).toFixed(4);
 // Phones get their own art (tall cover, stacked footer) via <picture>
 const PHONE = '(max-width: 640px)';
 const srcset = async (src: ImageMetadata, widths: number[]) =>
@@ -32,7 +33,7 @@ const footerMobileSet = await srcset(footerArtMobile, [600, 900, 1300]);
 const social = await getImage({ src: cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
 ---
 <Base title={`Field Notes No. ${number}`} description={description} bodyClass="field-notes" image={social.src} type="article" header={false} footer={false}>
-  <article class="fn" style={`--fn-cover-ratio:${coverRatio}`}>
+  <article class="fn" style={`--fn-cover-ratio:${coverRatio};--fn-cover-ratio-m:${coverRatioM}`}>
     <!-- The cover holds in place while the letter slides up over it -->
     <div class="fn-cover">
       <picture>
