@@ -159,10 +159,23 @@ body.hp {
 
 /* ---------- Phones ---------- */
 @media (max-width: 640px) {
+  /* phones: a much lighter touch. The same blur reads far heavier on small
+     type and dense screens, so the worn look is kept just at the edges. */
+  .hp-name,
+  .hp-nav a {
+    filter: blur(0.3px);
+    text-shadow: 0 0 0.5px var(--hp-red);
+  }
+  .hp-horse, .hp-intro__tag { filter: none; }
+
   .hp-name {
     white-space: normal;
-    font-size: 23vw;
-    line-height: 0.86;
+    text-align: left;
+    justify-self: stretch;
+    margin: 1.75rem 0.85rem 0;
+    font-size: 31.5vw;
+    line-height: 0.84;
+    letter-spacing: -0.01em;
   }
   .hp-horse { width: 92vw; margin-top: 9vh; }
   .hp-intro__video { object-position: 42% 60%; }
