@@ -85,21 +85,29 @@ body.field-notes {
 /* ---------- Folder tab on top of the sheet ---------- */
 .fn { --fn-tab-h: 3.1rem; --fn-tab-r: 16px; }
 /* zero-height row sitting on the sheet's top edge; the tab hangs up from it */
-.fn-tabrow { position: relative; z-index: 3; height: 0; }
+/* below the sheet, so the tab's foot tucks under the sheet's top edge and
+   no hairline can open up between them (iOS rounds them apart) */
+.fn-tabrow { position: relative; z-index: 1; height: 0; }
 .fn-tab {
   position: absolute;
-  /* overlaps the sheet a few px so no seam can show between them */
-  bottom: -4px;
+  /* runs a few px under the sheet so no seam can show between them */
+  bottom: -6px;
   left: calc(var(--fn-gutter) + var(--fn-tab-r));
   min-width: 17rem;
-  height: calc(var(--fn-tab-h) + 4px);
-  padding: 0 2.25rem 4px;
+  height: calc(var(--fn-tab-h) + 6px);
+  padding: 0 2.25rem 6px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(--fn-paper);
   background-image: var(--fn-paper-texture);
-  background-size: 900px auto;
+  background-repeat: repeat-y;
+  /* same scale and alignment as the sheet's paper, so the grain runs on
+     unbroken from the tab into the sheet */
+  background-size: max(100vw, 900px) auto;
+  background-position:
+    calc((100vw - max(100vw, 900px)) / 2 - var(--fn-gutter) - var(--fn-tab-r))
+    var(--fn-tab-h);
   background-blend-mode: multiply;
   border-radius: var(--fn-tab-r) var(--fn-tab-r) 0 0;
   /* date handwritten on the tab */
