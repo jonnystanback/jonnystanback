@@ -1,0 +1,24 @@
+---
+// Inner pages on the scanned paper: small horse + nav on top, a big worn-in
+// red headline, then the page's content.
+import Base from './Base.astro';
+import PaperNav from '../components/paper/PaperNav.astro';
+import '../styles/paper.css';
+
+interface Props {
+  title: string;          // shown as the headline and in the tab title
+  description?: string;
+  headline?: string;      // defaults to title
+}
+const { title, description, headline = title } = Astro.props;
+---
+<Base title={title} description={description} bodyClass="paper" header={false} footer={false}>
+  <div class="pp">
+    <PaperNav />
+    <main class="pp-main">
+      <h1 class="pp-headline">{headline}</h1>
+      <slot />
+    </main>
+    <div class="pp-foot">© {new Date().getFullYear()} Jonny Stanback</div>
+  </div>
+</Base>

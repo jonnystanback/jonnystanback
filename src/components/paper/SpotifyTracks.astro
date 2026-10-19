@@ -1,0 +1,175 @@
+---
+// Styled track rows that play through Spotify's embed (iFrame API).
+// One hidden Spotify player is shared by every row; the rows are the controls.
+// Listeners signed in to Spotify in that browser hear full tracks; everyone
+// else gets Spotify's 30-second preview. A track without an id links out.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+export interface Track { title: string; id?: string; length: string; art: ImageMetadata; release?: string; }
+interface Props { tracks: Track[]; artistUrl: string; }
+const { tracks, artistUrl } = Astro.props;
+
+const BARS = 64;
+const wave = (seed0: string) => {
+  let seed = [...seed0].reduce((a, c) => a + c.charCodeAt(0), 7);
+  const rand = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+  return Array.from({ length: BARS }, (_, i) => {
+    const swell = 0.5 + 0.5 * Math.sin((i / BARS) * Math.PI);
+    return Math.round((0.3 + rand() * 0.7) * swell * 100);
+  });
+};
+---
+<div class="pp-sp" data-sp>
+  <ul class="pp-tracks">
+    {tracks.map((t) => (
+      <li>
+        {t.id ? (
+          <div class="pp-sp__row" data-uri={`spotify:track:${t.id}`} data-len={t.length}>
+            <Image src={t.art} alt="" width={96} height={96} class="pp-sp__art" />
+            <button class="pp-sp__play" type="button" aria-label={`Play ${t.title}`}><span></span></button>
+            <span class="pp-sp__title">{t.title}{t.release && <span class="pp-sp__rel"> – {t.release}</span>}</span>
+            <span class="pp-sp__wave" aria-hidden="true">{wave(t.title).map((h) => <i style={`--h:${h}%`}></i>)}</span>
+            <span class="pp-sp__time" data-time>{t.length}</span>
+          </div>
+        ) : (
+          <a class="pp-sp__row" href={artistUrl} target="_blank" rel="noopener">
+            <Image src={t.art} alt="" width={96} height={96} class="pp-sp__art" />
+            <span class="pp-sp__play" aria-hidden="true"><span></span></span>
+            <span class="pp-sp__title">{t.title}{t.release && <span class="pp-sp__rel"> – {t.release}</span>}</span>
+            <span class="pp-sp__wave" aria-hidden="true">{wave(t.title).map((h) => <i style={`--h:${h}%`}></i>)}</span>
+            <span class="pp-sp__time">{t.length}</span>
+          </a>
+        )}
+      </li>
+    ))}
+  </ul>
+  <!-- the actual Spotify player; kept out of sight unless the browser needs a tap on it -->
+  <div class="pp-sp__embed" data-embed><div data-embed-target></div></div>
+</div>
+
+<script>
+  type Ctrl = {
+    loadUri(uri: string): void; play(): void; togglePlay(): void; pause(): void;
+    addListener(ev: string, cb: (e: any) => void): void;
+  };
+  const root = document.querySelector<HTMLElement>('[data-sp]');
+  if (root) {
+    const rows = [...root.querySelectorAll<HTMLElement>('.pp-sp__row[data-uri]')];
+    const embedBox = root.querySelector<HTMLElement>('[data-embed]')!;
+    let ctrl: Ctrl | null = null;
+    let current: HTMLElement | null = null;
+    let pending: HTMLElement | null = null;
+    let started = false;
+    const BARS_N = 64;
+    const fmt = (ms: number) => { const s = Math.floor(ms / 1000); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; };
+
+    const setState = (row: HTMLElement | null, playing: boolean) => {
+      rows.forEach((r) => {
+        const on = r === row;
+        r.classList.toggle('is-current', on);
+        r.classList.toggle('is-playing', on && playing);
+        r.querySelector('button')!.setAttribute('aria-label', `${on && playing ? 'Pause' : 'Play'} ${r.querySelector('.pp-sp__title')!.textContent}`);
+      });
+    };
+
+    const start = (row: HTMLElement) => {
+      if (!ctrl) { pending = row; return; }
+      if (row === current) { ctrl.togglePlay(); return; }
+      rows.forEach((r) => {
+        r.querySelectorAll('.pp-sp__wave i').forEach((b) => b.classList.remove('on'));
+        (r.querySelector('[data-time]') as HTMLElement).textContent = r.dataset.len!;
+      });
+      current = row; started = false;
+      setState(row, true);
+      ctrl.loadUri(row.dataset.uri!);
+      ctrl.play();
+      // some browsers (iOS) only let the Spotify player start from a tap inside it
+      setTimeout(() => { if (!started && current === row) embedBox.classList.add('is-shown'); }, 3500);
+    };
+
+    rows.forEach((row) => row.querySelector('button')!.addEventListener('click', () => start(row)));
+
+    (window as any).onSpotifyIframeApiReady = (api: any) => {
+      api.createController(root.querySelector('[data-embed-target]'), { width: '100%', height: 80, uri: rows[0]?.dataset.uri }, (c: Ctrl) => {
+        ctrl = c;
+        c.addListener('playback_update', (e) => {
+          const { isPaused, position, duration } = e.data;
+          if (!current) return;
+          if (!isPaused && position > 0) { started = true; embedBox.classList.remove('is-shown'); }
+          setState(current, !isPaused);
+          if (duration) {
+            const lit = Math.round(Math.min(position / duration, 1) * BARS_N);
+            current.querySelectorAll('.pp-sp__wave i').forEach((b, i) => b.classList.toggle('on', i < lit));
+            (current.querySelector('[data-time]') as HTMLElement).textContent = `${fmt(position)} / ${fmt(duration)}`;
+          }
+        });
+        if (pending) { const p = pending; pending = null; start(p); }
+      });
+    };
+    const s = document.createElement('script');
+    s.src = 'https://open.spotify.com/embed/iframe-api/v1';
+    s.async = true;
+    document.body.appendChild(s);
+  }
+</script>
+
+<style>
+  .pp-sp__row {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, auto) 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.55rem 1.1rem 0.55rem 0.55rem;
+    background: var(--pp-red);
+    color: #FBF6EC;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: 'Courier Prime', 'Courier New', monospace;
+  }
+  .pp-sp__art { width: 2.6rem; height: 2.6rem; border-radius: 2px; object-fit: cover; display: block; }
+  .pp-sp__play {
+    width: 1.6rem; height: 1.6rem; display: grid; place-items: center;
+    background: none; border: 0; padding: 0; cursor: pointer;
+  }
+  .pp-sp__play span {
+    width: 0; height: 0;
+    border-left: 1.05rem solid #FBF6EC;
+    border-top: 0.65rem solid transparent;
+    border-bottom: 0.65rem solid transparent;
+    margin-left: 3px;
+  }
+  .is-playing .pp-sp__play span {
+    width: 0.95rem; height: 1.1rem; margin-left: 0;
+    border: 0;
+    border-left: 0.32rem solid #FBF6EC;
+    border-right: 0.32rem solid #FBF6EC;
+  }
+  .pp-sp__title {
+    text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.9rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .pp-sp__rel { opacity: 0.8; }
+  .pp-sp__wave {
+    display: flex; align-items: center; gap: 2px; height: 1.5rem; min-width: 0; overflow: hidden;
+  }
+  .pp-sp__wave i {
+    flex: 1 0 2px; max-width: 3px; height: var(--h); border-radius: 2px;
+    background: rgba(40, 0, 0, 0.45);
+  }
+  .pp-sp__wave i.on { background: #FBF6EC; }
+  .pp-sp__time { font-size: 0.8rem; letter-spacing: 0.04em; white-space: nowrap; }
+  .pp-sp__row:focus-within { outline: 2px solid var(--pp-red); outline-offset: 3px; }
+  a.pp-sp__row:hover { filter: brightness(1.06); }
+
+  .pp-sp__embed { position: fixed; left: -10000px; top: 0; width: 320px; height: 80px; }
+  .pp-sp__embed.is-shown {
+    position: static; width: auto; height: auto; margin-top: 0.75rem;
+  }
+
+  @media (max-width: 640px) {
+    .pp-sp__row { grid-template-columns: auto auto 1fr auto; gap: 0.75rem; }
+    .pp-sp__wave { display: none; }
+    .pp-sp__title { font-size: 0.8rem; }
+  }
+</style>

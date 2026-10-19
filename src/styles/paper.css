@@ -1,0 +1,153 @@
+/* ==========================================================================
+   Inner pages: scanned paper, red worn-in type
+   ========================================================================== */
+body.paper {
+  --pp-red: #E41010;
+  --pp-paper: #F3EEE2;
+  --pp-gutter: clamp(1.25rem, 4.5vw, 4rem);
+  --pp-col: 50rem;
+  background: var(--pp-paper) url('/field-notes/paper.jpg') repeat-y center top / max(100%, 900px) auto;
+  background-blend-mode: multiply;
+  color: var(--pp-red);
+  font-family: 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  min-height: 100vh;
+}
+.pp { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* soft, slightly spread ink for all red type */
+.pp-headline,
+.pp-nav a,
+.pp-type {
+  filter: blur(0.45px);
+  text-shadow: 0 0 1px currentColor;
+}
+
+/* ---------- Nav ---------- */
+.pp-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: clamp(1rem, 2.5vw, 1.75rem) var(--pp-gutter);
+}
+.pp-nav__home img { display: block; width: clamp(2.4rem, 3.2vw, 3rem); height: auto; }
+.pp-nav .pp-nav__links { flex: 1; display: block; }
+.pp-nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+.pp-nav a {
+  color: var(--pp-red);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: clamp(0.8rem, 1.1vw, 1.05rem);
+  letter-spacing: 0.01em;
+}
+.pp-nav a:hover { opacity: 1; }
+.pp-nav a:hover,
+.pp-nav a[aria-current='page'] { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ---------- Headline ---------- */
+.pp-main { flex: 1; padding: 0 var(--pp-gutter) clamp(4rem, 10vw, 8rem); }
+.pp-headline {
+  font-family: 'Neo Contact D', serif;
+  font-weight: normal;
+  text-transform: uppercase;
+  color: var(--pp-red);
+  font-size: clamp(4.5rem, 15vw, 15rem);
+  line-height: 0.85;
+  letter-spacing: 0.005em;
+  margin: clamp(1rem, 3vw, 2.5rem) 0 clamp(2.5rem, 6vw, 5rem);
+}
+
+/* ---------- Shared bits ---------- */
+.pp-col { max-width: var(--pp-col); margin-inline: auto; }
+.pp-type {
+  font-family: 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--pp-red);
+}
+.pp-foot {
+  padding: 1.5rem var(--pp-gutter) 2rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+/* ---------- Field Notes ---------- */
+.pp-folder {
+  display: block;
+  width: min(26rem, 70vw);
+  margin: clamp(1rem, 4vw, 3rem) auto 0;
+  transition: transform 0.25s ease;
+}
+.pp-folder img { display: block; width: 100%; height: auto; }
+.pp-folder:hover { transform: translateY(-6px) rotate(-1deg); }
+.pp-folder__label { display: block; text-align: center; margin-top: 1rem; font-size: 0.85rem; }
+
+/* ---------- About ---------- */
+.pp-about__photo { display: block; width: min(100%, 36rem); height: auto; margin-bottom: 2.5rem; }
+.pp-about__bio p {
+  font-size: clamp(0.9rem, 1.05vw, 1rem);
+  line-height: 1.35;
+  margin: 0 0 1.25em;
+}
+
+/* ---------- Music ---------- */
+.pp-tracks { list-style: none; display: grid; gap: 0.6rem; }
+.pp-spotify-link { display: inline-block; margin-top: 1rem; font-size: 0.85rem; color: var(--pp-red); }
+.pp-video { margin-top: clamp(3rem, 8vw, 6rem); }
+.pp-video__frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #111;
+  overflow: hidden;
+}
+.pp-video__frame img, .pp-video__frame iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover;
+}
+.pp-video__play {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background: transparent; border: 0; cursor: pointer;
+}
+.pp-video__play span {
+  width: 4.5rem; height: 4.5rem; border-radius: 50%;
+  background: rgba(228, 16, 16, 0.92);
+  display: grid; place-items: center;
+  transition: transform 0.2s ease;
+}
+.pp-video__play span::after {
+  content: ''; margin-left: 5px;
+  border-left: 1.25rem solid #FBF6EC;
+  border-top: 0.8rem solid transparent;
+  border-bottom: 0.8rem solid transparent;
+}
+.pp-video__play:hover span { transform: scale(1.06); }
+.pp-video figcaption { margin-top: 0.9rem; font-size: 0.8rem; line-height: 1.25; }
+
+/* ---------- Merch ---------- */
+.pp-merch {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(2rem, 6vw, 6rem) clamp(1.5rem, 5vw, 5rem);
+  max-width: 64rem;
+  margin-inline: auto;
+  align-items: center;
+}
+.pp-merch img { display: block; width: 100%; height: auto; }
+.pp-merch .is-small img { width: 62%; margin-inline: auto; }
+.pp-merch figcaption { margin-top: 1rem; text-align: center; font-size: 0.85rem; }
+
+/* ---------- Phones ---------- */
+@media (max-width: 640px) {
+  .pp-nav { gap: 1rem; }
+  .pp-nav ul { justify-content: flex-end; flex-wrap: wrap; gap: 0.35rem 1rem; }
+  .pp-headline { font-size: 22vw; }
+  .pp-merch { grid-template-columns: 1fr; }
+  .pp-merch .is-small img { width: 75%; }
+}

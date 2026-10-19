@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import Paper from '../layouts/Paper.astro';
+import photo from '../assets/pages/about.jpg';
+
+const bio = [
+  'The things that matter to us become the matter of us…',
+  'We spend our lives in the making of things–memories, mistakes, meals around the dinner table. The small and frequent choices we make throughout our days shape how we live. West Coast-born and raised singer-songwriter, Jonny Stanback, lives at the intersection of making and living, paying attention to the fleeting moments of beauty that make up the human experience with a designer’s eye and a craftsman’s heart.',
+  'Jonny’s story began in Irvine, California. Born of Mexican-American descent, he was the middle child of three boys. He was the quiet, curious one in the household. “I was very creative, loved reading, and was actually very shy. I feel like a considerable amount of my personality today has been learned or developed rather than inherited. The deep core of the child I was has remained very much intact.”',
+  'Raised in a religious household, he developed an early sense that life was about more than what could be seen or measured. “We grew up in a pretty intense Christian non-denominational church, and I enjoyed being heavily involved as a child. As I got older, there were some things that didn’t make sense to me, and much of my twenties was spent searching for truth, as what I would define as an agnostic. After meeting my now-wife, I felt drawn back to Christianity in a way I could define for myself. I am a firm believer that there are many things that we cannot understand or see, and that trusting your spiritual instincts is supremely important to living a meaningful life.”',
+  'Beyond family and faith, California instilled in him a foundational love of nature and the outdoors, which eventually inspired him to study geology in college. After completing extensive research in both Yosemite Valley and Argentina, Jonny received his master’s degree from the University of Southern California. Although he did not pursue a career in the field, echoes of the natural world resonate throughout his music today.',
+  'Jonny began writing songs as a child and later joined the Los Angeles rock band, The Jacks, after college. The band saw early success and quickly grew from local shows to landing a major record deal with Edgeout Records/UMG. They played festivals including Aftershock and Sonic Temple, landed syncs in NCAA Football, and performed at Super Bowl LIII Live and the NHL Awards Show. For a while, it seemed like the pieces of a perfect creative life were all falling into place. But Jonny soon realized that success could be measured in many different ways. He began searching for something that felt less like outward achievement and more like inner purpose.',
+  'Meeting his future wife became part of that reckoning. When she was accepted to a master’s program in Rome, the two packed up and moved to Italy for ten months–a decision that gave Jonny the distance to reconsider the life he’d been living and the person he wanted to become. Around the same time, Jonny and a few friends started the Web3 art collection and community, DeGods. Jonny himself sketched the original viral designs.',
+  'Ultimately, he left the startup & the rocker lifestyle behind, leaving LA, and returning his attention to the outdoors, songwriting, design, and family.',
+  'Alongside music, Jonny is the co-founder of the branding and design agency, Infinite Fun, where he works with founders to shape their ideas into something tangible. Design gives him another way to explore the same instinct that has always driven his music: the belief that how something is made matters.',
+  'Jonny currently lives in Santa Barbara with his wife and newborn daughter. Drawing from Americana, folk, and indie rock, his music weaves threads of love, nature, and redemption into a sound that has earned more than 500,000 monthly listeners and editorial placement alongside artists such as Noah Kahan, Gregory Alan Isakov, and Zach Bryan. His 2027 LP, Delta, explores the gap between where we are and where we want to be–a relatable theme central to the heart of the human condition. It is, in many ways, the same question that has run throughout Jonny’s life: how do we create meaning?',
+  'A well-crafted life is never really finished; perhaps that’s the whole point. We can only hope that one day, when we look back, we realize we’ve made something beautiful with the skills we had, and with the people we loved.',
+];
+---
+<Paper title="About" description="About Jonny Stanback, singer-songwriter from the West Coast.">
+  <div class="pp-col pp-about">
+    <Image src={photo} alt="Jonny playing an acoustic guitar in a green backyard." widths={[600, 900, 1200]} sizes="(min-width: 640px) 36rem, 100vw" class="pp-about__photo" />
+    <div class="pp-about__bio pp-type">
+      {bio.map((p) => <p>{p}</p>)}
+    </div>
+  </div>
+</Paper>

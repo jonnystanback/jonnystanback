@@ -1,16 +1,27 @@
 ---
-import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import Paper from '../layouts/Paper.astro';
+import hat from '../assets/merch/hat.png';
+import cd from '../assets/merch/cd.png';
+import shirt1 from '../assets/merch/shirt1.png';
+import shirt2 from '../assets/merch/shirt2.png';
+
+// Add a `href` to an item once it's for sale and it becomes a link.
+const items: { img: ImageMetadata; alt: string; small?: boolean; href?: string }[] = [
+  { img: hat, alt: 'Cream and olive Time Left EP hat with the red horse embroidered on the front.', small: true },
+  { img: cd, alt: 'Time Left EP on CD.' },
+  { img: shirt2, alt: 'Olive Time Left tee with running horses and the EP track list.' },
+  { img: shirt1, alt: 'Cream Time Left tee printed in red with the EP track list.' },
+];
 ---
-<Base title="Merch">
-  <div class="page-content">
-    <h1 class="page-title">MERCH</h1>
-
-    <div class="merch-coming-soon">
-      <h2>COMING SOON</h2>
-      <p>New merch dropping soon. Sign up to be the first to know.</p>
-      <a href="https://laylo.com/jonnystanback" class="merch-notify-btn" target="_blank">GET NOTIFIED</a>
-    </div>
-
-    <!-- Shopify Integration: when ready, add the Shopify Buy Button code here -->
-  </div>
-</Base>
+<Paper title="Merch">
+  <ul class="pp-merch">
+    {items.map((it) => (
+      <li class={it.small ? 'is-small' : undefined}>
+        {it.href
+          ? <a href={it.href} target="_blank" rel="noopener"><Image src={it.img} alt={it.alt} widths={[500, 900]} sizes="(min-width: 640px) 30rem, 90vw" /></a>
+          : <Image src={it.img} alt={it.alt} widths={[500, 900]} sizes="(min-width: 640px) 30rem, 90vw" />}
+      </li>
+    ))}
+  </ul>
+</Paper>
