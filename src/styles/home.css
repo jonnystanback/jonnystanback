@@ -146,9 +146,9 @@ body.hp {
   text-decoration: none;
   transition: color 0.2s ease;
 }
-/* hover: the red deepens a touch */
+/* hover: the menu item turns the sky blue from the hero */
 .hp-nav a:hover,
-.hp-nav a:focus-visible { color: #A80B0B; outline: none; }
+.hp-nav a:focus-visible { color: #4DA2AF; outline: none; }
 
 .hp-mark { position: absolute; bottom: clamp(1.25rem, 4vh, 2.5rem); height: auto; }
 .hp-mark--horse { left: var(--hp-gutter); width: clamp(2.6rem, 4vw, 3.6rem); }
