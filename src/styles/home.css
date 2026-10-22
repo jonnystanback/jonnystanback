@@ -59,7 +59,7 @@ body.hp {
   white-space: nowrap;
   text-align: center;
   /* softer, more worn than the menu (scales with the type) */
-  filter: blur(max(0.95px, 0.07vw));
+  filter: blur(max(0.8px, 0.06vw));
 }
 
 .hp-horse {
@@ -168,6 +168,7 @@ body.hp {
     text-shadow: 0 0 0.9px var(--hp-red), 0 0 2.25px rgba(228, 16, 16, 0.36);
   }
   .hp-horse, .hp-intro__tag { filter: none; }
+  .hp-name { text-shadow: 0 0 0.75px var(--hp-red), 0 0 1.9px rgba(228, 16, 16, 0.3); }
   .hp-intro__tag { text-shadow: 0 0 0.72px var(--hp-red), 0 0 1.44px rgba(228, 16, 16, 0.27); }
 
   .hp-name {
