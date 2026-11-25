@@ -17,11 +17,23 @@ export async function getStaticPaths() {
 
 const { issue } = Astro.props;
 const { Content } = await render(issue);
-const { number, date, location, description, cover, coverMobile, coverAlt, dateImage } = issue.data;
+const { number, date, location, description, cover, coverMobile, coverAlt } = issue.data;
 
 // Dateline as typed: 10-21-26
 const pad = (n: number) => String(n).padStart(2, '0');
-const dateline = `${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())}-${String(date.getUTCFullYear()).slice(-2)}`;
+const datelineOf = (d: Date) => `${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}-${String(d.getUTCFullYear()).slice(-2)}`;
+
+// One folder tab per issue, oldest on the left, each linking to its issue.
+// This issue's tab sits in front, joined to the sheet; the others sit behind.
+const tabs = (await getCollection('issues', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf())
+  .map((i) => ({
+    number: i.data.number,
+    date: i.data.date,
+    dateline: datelineOf(i.data.date),
+    dateImage: i.data.dateImage,
+    current: i.data.number === number,
+  }));
 const coverRatio = (cover.height / cover.width).toFixed(4);
 const coverRatioM = ((coverMobile ?? cover).height / (coverMobile ?? cover).width).toFixed(4);
 // Phones get their own art (tall cover, stacked footer) via <picture>
@@ -53,15 +65,23 @@ const social = await getImage({ src: cover, width: 1200, height: 630, fit: 'cove
     <!-- Folder tab on the top edge of the sheet, with the date written on it.
          It lives outside the sheet so the sheet's side clipping (for photos that
          bleed off the page) can never clip it — Safari clips both directions. -->
-    <div class="fn-tabrow">
-        <div class="fn-tab">
-          <time datetime={date.toISOString().slice(0, 10)}>
-            {dateImage
-              ? <Image src={dateImage} alt={dateline} widths={[200, 400]} sizes="9rem" class="fn-tab__date" />
-              : dateline}
+    <nav class="fn-tabrow" aria-label="Field Notes issues">
+      {tabs.map((t, i) => (
+        <a
+          class:list={['fn-tab', { 'fn-tab--back': !t.current }]}
+          href={`/inthefield/${t.number}`}
+          style={`--i:${i}`}
+          aria-current={t.current ? 'page' : undefined}
+          aria-label={`Field Notes No. ${t.number}, ${t.dateline}`}
+        >
+          <time datetime={t.date.toISOString().slice(0, 10)}>
+            {t.dateImage
+              ? <Image src={t.dateImage} alt="" widths={[200, 400]} sizes="9rem" class="fn-tab__date" />
+              : t.dateline}
           </time>
-        </div>
-    </div>
+        </a>
+      ))}
+    </nav>
 
     <div class="fn-sheet">
       <div class="fn-dateline">

@@ -83,11 +83,35 @@ body.paper {
 }
 
 /* ---------- Field Notes ---------- */
+/* issues sit side by side like folders on a desk; they stack on phones */
+.pp-folders {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  margin-top: clamp(1rem, 4vw, 3rem);
+}
 .pp-folder {
+  position: relative;
   display: block;
   width: min(26rem, 70vw);
-  margin: clamp(1rem, 4vw, 3rem) auto 0;
+  container-type: inline-size;
   transition: transform 0.25s ease;
+}
+/* the issue number, printed on the front of the folder */
+.pp-folder__no {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 55.8%;
+  translate: 0 -50%;
+  text-align: center;
+  font-family: 'Neo Contact D', serif;
+  font-size: 21cqw;
+  line-height: 1;
+  color: #E41010;
+  filter: blur(0.5px);
+  text-shadow: 0 0 1px currentColor;
 }
 .pp-folder img { display: block; width: 100%; height: auto; }
 .pp-folder:hover, .pp-folder:focus-visible { transform: scale(0.96); }

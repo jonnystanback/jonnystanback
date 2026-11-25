@@ -1,17 +1,21 @@
 ---
-// Field Notes: each issue is a folder. Newest first.
+// Field Notes: each issue is a folder, oldest on the left, with its number
+// set on the front in the red display type.
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Paper from '../../layouts/Paper.astro';
-import folder from '../../assets/pages/folder.png';
+import folder from '../../assets/pages/folder-blank.png';
 
 const issues = (await getCollection('issues', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
 ---
 <Paper title="Field Notes" description="Field Notes: a monthly letter from Jonny Stanback with unreleased songs, stories and works in progress.">
-  {issues.map((issue) => (
-    <a class="pp-folder" href={`/inthefield/${issue.data.number}`}>
-      <Image src={folder} alt={`Field Notes No. ${issue.data.number}`} widths={[500, 900]} sizes="26rem" />
-    </a>
-  ))}
+  <div class="pp-folders">
+    {issues.map((issue) => (
+      <a class="pp-folder" href={`/inthefield/${issue.data.number}`} aria-label={`Field Notes No. ${issue.data.number}`}>
+        <Image src={folder} alt="" widths={[500, 900]} sizes="(min-width: 900px) 26rem, 70vw" />
+        <span class="pp-folder__no" aria-hidden="true">{issue.data.number}</span>
+      </a>
+    ))}
+  </div>
 </Paper>

@@ -1,0 +1,68 @@
+---
+// "Ask a question" form at the end of an issue. Posts to /api/question
+// (a Vercel function that emails the question to Jonny). With JavaScript the
+// thank-you note replaces the form in place; without it, the function sends
+// the reader back to this issue with ?asked=1.
+interface Props { issue: string; }
+const { issue } = Astro.props;
+---
+<section class="fn-ask" id="ask" aria-labelledby="fn-ask-title">
+  <h2 id="fn-ask-title" class="fn-ask__title">Ask a question</h2>
+  <form class="fn-ask__form" method="post" action="/api/question" data-ask>
+    <input type="hidden" name="issue" value={issue} />
+    <!-- left empty by people; bots fill it in -->
+    <div class="fn-visually-hidden" aria-hidden="true">
+      <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+    </div>
+    <label class="fn-ask__field">
+      <span>Name</span>
+      <input type="text" name="name" autocomplete="name" maxlength="120" required />
+    </label>
+    <label class="fn-ask__field">
+      <span>Town/City</span>
+      <input type="text" name="city" autocomplete="address-level2" maxlength="120" />
+    </label>
+    <label class="fn-ask__field">
+      <span>Country</span>
+      <input type="text" name="country" autocomplete="country-name" maxlength="120" />
+    </label>
+    <label class="fn-ask__field">
+      <span>Question</span>
+      <textarea name="question" rows="7" maxlength="4000" required></textarea>
+    </label>
+    <button class="fn-ask__send" type="submit">Send my question</button>
+    <p class="fn-ask__status" data-ask-status role="status" aria-live="polite"></p>
+  </form>
+  <p class="fn-ask__thanks" data-ask-thanks hidden>Thank you. Your question is on its way to me.</p>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-ask]').forEach((form) => {
+    const section = form.closest('.fn-ask')!;
+    const thanks = section.querySelector<HTMLElement>('[data-ask-thanks]')!;
+    const status = form.querySelector<HTMLElement>('[data-ask-status]')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const done = () => { form.hidden = true; thanks.hidden = false; };
+
+    if (new URLSearchParams(location.search).has('asked')) done();
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      button.disabled = true;
+      status.textContent = 'Sending…';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(form),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        status.textContent = '';
+        done();
+      } catch {
+        status.textContent = 'That didn’t go through. Please try again in a minute, or email hello@jonnystanback.com.';
+        button.disabled = false;
+      }
+    });
+  });
+</script>

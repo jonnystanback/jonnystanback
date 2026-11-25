@@ -31,7 +31,7 @@ const pauseIcon = 'M6.5 4.5h3.5v15h-3.5zM14 4.5h3.5v15h-3.5z';
       <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d={pauseIcon} /></svg>
     </button>
     <div class="fn-demo__meta">
-      <span class="fn-demo__title">{title} – {kind}</span>
+      <span class="fn-demo__title">{title}{kind && ` – ${kind}`}</span>
       <span class="fn-demo__time" data-time></span>
     </div>
     <div class="fn-demo__wave" data-wave role="slider" tabindex="0" aria-label={`Seek ${title}`} aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
@@ -47,7 +47,7 @@ const pauseIcon = 'M6.5 4.5h3.5v15h-3.5zM14 4.5h3.5v15h-3.5z';
       <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d={playIcon} /></svg>
       <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d={pauseIcon} /></svg>
     </button>
-    <a class="fn-dock__title" href={`#${id}`} tabindex="-1">{title} – {kind}</a>
+    <a class="fn-dock__title" href={`#${id}`} tabindex="-1">{title}{kind && ` – ${kind}`}</a>
     <span class="fn-dock__time" data-dock-time></span>
     <span class="fn-dock__progress" data-dock-progress></span>
   </div>

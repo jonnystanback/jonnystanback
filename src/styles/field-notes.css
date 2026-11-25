@@ -105,17 +105,21 @@ body.field-notes {
 .fn { --fn-sheet-r: clamp(16px, 2.5vw, 32px); }
 
 /* ---------- Folder tab on top of the sheet ---------- */
-.fn { --fn-tab-h: 3.1rem; --fn-tab-r: 16px; }
+.fn { --fn-tab-h: 3.1rem; --fn-tab-r: 16px; --fn-tab-w: 17rem; --fn-tab-gap: 0.6rem; }
 /* zero-height row sitting on the sheet's top edge; the tab hangs up from it */
 /* below the sheet, so the tab's foot tucks under the sheet's top edge and
    no hairline can open up between them (iOS rounds them apart) */
 .fn-tabrow { position: relative; z-index: 1; height: 0; }
 .fn-tab {
+  /* one tab per issue, side by side: --i is the tab's place in the row */
+  --fn-tab-x: calc(var(--fn-gutter) + var(--fn-tab-r) + var(--i, 0) * (var(--fn-tab-w) + 2 * var(--fn-tab-r) + var(--fn-tab-gap)));
   position: absolute;
   /* runs a few px under the sheet so no seam can show between them */
   bottom: -6px;
-  left: calc(var(--fn-gutter) + var(--fn-tab-r));
-  min-width: 17rem;
+  left: var(--fn-tab-x);
+  width: var(--fn-tab-w);
+  box-sizing: border-box;
+  text-decoration: none;
   height: calc(var(--fn-tab-h) + 6px);
   padding: 0 2.25rem 6px;
   display: flex;
@@ -128,7 +132,7 @@ body.field-notes {
      unbroken from the tab into the sheet */
   background-size: max(100vw, 900px) auto;
   background-position:
-    calc((100vw - max(100vw, 900px)) / 2 - var(--fn-gutter) - var(--fn-tab-r))
+    calc((100vw - max(100vw, 900px)) / 2 - var(--fn-tab-x))
     var(--fn-tab-h);
   background-blend-mode: multiply;
   border-radius: var(--fn-tab-r) var(--fn-tab-r) 0 0;
@@ -156,6 +160,23 @@ body.field-notes {
   left: 100%;
   background: radial-gradient(circle at 100% 0, transparent calc(var(--fn-tab-r) - 0.5px), var(--fn-paper) var(--fn-tab-r));
 }
+
+/* tabs of the other issues: a folder further back in the stack, a little
+   shorter, at full strength; they rise to full height when you point at them */
+.fn-tab--back {
+  z-index: -1;
+  height: calc(var(--fn-tab-h) - 0.35rem + 6px);
+  /* a touch darker, like the next folder back in the drawer */
+  filter: brightness(0.94);
+  transition: height 0.2s ease;
+}
+/* the site-wide `nav a:hover` fade must never touch the tabs */
+.fn-tabrow .fn-tab,
+.fn-tabrow .fn-tab:hover,
+.fn-tabrow .fn-tab:focus-visible { opacity: 1; }
+.fn-tab--back:hover,
+.fn-tab--back:focus-visible { height: calc(var(--fn-tab-h) + 6px); }
+.fn-tab[aria-current] { cursor: default; }
 
 /* ---------- Dateline ---------- */
 .fn-tab time { display: flex; align-items: center; }
@@ -246,7 +267,9 @@ figcaption {
 .fn-note img, .fn-doodle img { display: block; width: 100%; height: auto; }
 .fn-note--right { margin-left: auto; }
 .fn-note--left { margin-right: auto; }
-.fn-doodle { width: 5rem; margin: 0.5rem auto 1.5rem; }
+.fn-doodle { width: min(5rem, var(--fn-doodle-w, 5rem)); margin: 0.5rem auto 1.5rem; }
+/* a note set inline between paragraphs, centered on the column */
+.fn-note--center { width: min(23.25rem, 66%); margin: 2.5rem auto 2.75rem; }
 
 /* ---------- Demo player ---------- */
 .fn-demo { margin: var(--fn-s2) 0; }
@@ -349,7 +372,7 @@ figcaption {
 }
 .fn-pair figure { margin: 0; }
 .fn-pair img { display: block; width: 100%; height: auto; }
-.fn-pair .fn-pair__left { margin-top: clamp(5rem, 15vw, 13rem); }   /* studio sits lower, so the mic starts higher */
+.fn-pair .fn-pair__left { margin-top: var(--fn-pair-drop, clamp(5rem, 15vw, 13rem)); }   /* studio sits lower, so the mic starts higher */
 .fn-pair figcaption { text-align: center; max-width: 18rem; margin-inline: auto; }
 
 /* ---------- Photos ---------- */
@@ -357,6 +380,67 @@ figcaption {
 .fn-wide { margin: var(--fn-s3) 0; clear: both; }
 .fn-break-left img,
 .fn-wide img { display: block; width: 100%; height: auto; }
+
+/* ---------- Ask a question ---------- */
+.fn-ask {
+  position: relative;
+  z-index: 1;
+  margin: var(--fn-s4) auto 0;
+  max-width: 36rem;
+  font-family: var(--fn-letter);
+  -webkit-text-stroke: 0;
+}
+.fn-ask__title {
+  font-family: var(--fn-display);
+  font-weight: normal;
+  color: var(--fn-red);
+  font-size: clamp(2rem, 4.2vw, 2.9rem);
+  line-height: 1;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 var(--fn-s2);
+}
+.fn-ask__form { display: grid; gap: 1.4rem; }
+.fn-ask__field { display: grid; gap: 0.6rem; }
+.fn-ask__field span {
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.fn-ask__field input,
+.fn-ask__field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem 1.1rem;
+  border: 0;
+  border-radius: 12px;
+  background: #FDFBF5;
+  color: var(--fn-ink);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.fn-ask__field textarea { min-height: 13rem; resize: vertical; }
+.fn-ask__field input:focus-visible,
+.fn-ask__field textarea:focus-visible { outline: 2px solid var(--fn-burgundy); outline-offset: 2px; }
+.fn-ask__send {
+  margin-top: 0.6rem;
+  padding: 1.5rem 1rem;
+  border: 0;
+  background: var(--fn-red);
+  color: #FFFFFF;
+  font: inherit;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.fn-ask__send:hover { background: #C20D0C; }
+.fn-ask__send:focus-visible { outline: 2px solid var(--fn-red); outline-offset: 3px; }
+.fn-ask__send:disabled { opacity: 0.7; cursor: progress; }
+.fn-ask__status { margin: 0; min-height: 1.5em; text-align: center; font-size: 0.95rem; }
+.fn-ask__thanks { text-align: center; font-size: 1.15rem; margin: 0; }
 
 /* ---------- Sign-off ---------- */
 .fn-signoff { margin-top: var(--fn-s2); text-align: center; }
@@ -410,8 +494,11 @@ figcaption {
   /* pushed as far out as the window allows, 1rem from the edge */
   .fn-note--right img { right: calc(-1 * (var(--fn-side) - 1rem)); }
   .fn-note--left img { left: calc(-1 * (var(--fn-side) - 1rem)); }
-  .fn-doodle img { width: 6rem; left: calc(-1 * min(10rem, var(--fn-side) - 1rem)); }
-  .fn-doodle--right img { left: auto; right: calc(-1 * min(10rem, var(--fn-side) - 1rem)); }
+  .fn-doodle img { width: var(--fn-doodle-w, 6rem); left: calc(-1 * min(var(--fn-doodle-x, var(--fn-doodle-w, 6rem) + 4rem), var(--fn-side) - 1rem)); }
+  .fn-doodle--right img { left: auto; right: calc(-1 * min(var(--fn-doodle-x, var(--fn-doodle-w, 6rem) + 4rem), var(--fn-side) - 1rem)); }
+  /* centered notes stay in the column, taking their own space */
+  .fn-note--center { height: auto; width: min(23.25rem, 66%); margin: 2.5rem auto 2.75rem; }
+  .fn-note--center img { position: static; width: 100%; }
   .fn-body > p, .fn-body > .fn-memos, .fn-signoff { position: relative; z-index: 1; }
 
   /* player, photo pair and wide photo: centered on the column */
@@ -450,7 +537,9 @@ figcaption {
   .fn-body > p { text-align: left; hyphens: manual; -webkit-hyphens: manual; }
   .fn-body { font-size: 1.0625rem; line-height: 1.5; }
   .fn { --fn-tab-h: 2.6rem; --fn-tab-r: 12px; }
-  .fn-tab { min-width: 11rem; padding: 0 1.5rem 4px; font-size: 1.7rem; }
+  .fn { --fn-tab-w: 9.25rem; --fn-tab-gap: 0.25rem; }
+  .fn-tab { padding: 0 0.9rem 4px; font-size: 1.7rem; }
+  .fn-tab__date { max-width: 100%; object-fit: contain; }
   .fn-dateline { font-size: 1.01rem; }
   .fn-tab__date { height: 1.45rem; margin-top: 0.4rem; }
   /* phones use the stacked footer art (2507x3067; button x 400-2172, y 2395-2712) */
