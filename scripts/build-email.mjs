@@ -1,7 +1,9 @@
 // Turns a Field Notes issue (src/content/issues/<n>.mdx) into a send-ready HTML email.
 //   npm run email -- 001
-// Writes email/<n>.html and email-sized images to public/field-notes/<n>/email/
-// (those images go live with the site, so push before sending).
+// Writes email/<n>.html, email/<n>.json (a Resend broadcast body: name, from,
+// reply_to, subject, html) and email-sized images to
+// public/field-notes/<n>/email/ (those images go live with the site, so push
+// and deploy before sending).
 import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
@@ -60,17 +62,19 @@ const blocks = {
   },
   Demo(s) {
     const id = prop(s, 'id'), title = prop(s, 'title'), note = prop(s, 'note');
+    const kind = prop(s, 'kind') ?? 'Demo';
     return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:6px 0 22px;"><tr><td>
       <a href="${pageUrl}#${id}" style="display:block;background:#8A1E1E;border-radius:6px;padding:18px 20px;text-decoration:none;">
         <span style="font-family:${FONT};font-size:22px;color:#B4A884;">&#9654;</span>
-        <span style="font-family:${FONT};font-size:15px;letter-spacing:0.08em;text-transform:uppercase;color:#B4A884;padding-left:10px;">${esc(title)} – Demo</span>
+        <span style="font-family:${FONT};font-size:15px;letter-spacing:0.08em;text-transform:uppercase;color:#B4A884;padding-left:10px;">${esc(title)}${kind ? ` – ${esc(kind)}` : ''}</span>
         <span style="display:block;font-family:${SANS};font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:#F05454;padding-top:8px;">Tap to listen &rarr;</span>
       </a>${note ? caption(note) : ''}</td></tr></table>`;
   },
   MarginNote(s) {
     const v = prop(s, 'src'), alt = prop(s, 'alt') || '';
     const doodle = /kind="doodle"/.test(s);
-    const w = doodle ? 110 : 380;
+    // centered notes are set smaller, as on the page
+    const w = doodle ? 110 : /side="center"/.test(s) ? 300 : 380;
     const url = emailImg(imports[v], w, v);
     return `<p style="margin:4px 0 22px;text-align:center;"><img src="${url}" width="${w}" alt="${esc(alt)}" style="display:inline-block;width:${w}px;max-width:100%;height:auto;border:0;"></p>`;
   },
@@ -86,8 +90,20 @@ const blocks = {
       <td class="stack" width="50%" valign="top" style="padding-right:8px;">${side('left')}</td>
       <td class="stack" width="50%" valign="top" style="padding-left:8px;">${side('right')}</td></tr></table>`;
   },
+  Figure(s) {
+    const v = prop(s, 'src'), alt = prop(s, 'alt') || '', cap = prop(s, 'caption');
+    return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 26px;"><tr><td>
+      <img src="${emailImg(imports[v], 520, v)}" width="520" alt="${esc(alt)}" style="display:block;width:100%;height:auto;border:0;">${cap ? caption(cap) : ''}</td></tr></table>`;
+  },
+  // The web page has a form; an email can't, so this links to it.
+  AskQuestion() {
+    return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:30px 0 10px;"><tr><td align="center">
+      <a href="${pageUrl}#ask" style="display:inline-block;background:${C.red};color:#FFFFFF;font-family:${FONT};font-size:15px;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;padding:16px 28px;">Ask a question &rarr;</a>
+      </td></tr></table>`;
+  },
   Signoff() {
-    const sig = emailImg(path.join(root, 'src/assets/field-notes', num, 'signature.png'), 190, 'signature');
+    // the signature is shared by every issue (see Signoff.astro)
+    const sig = emailImg(path.join(root, 'src/assets/field-notes/001/signature.png'), 190, 'signature');
     return `<p style="margin:30px 0 6px;font-family:${FONT};font-size:17px;color:${C.ink};text-align:center;">See you next month,</p>
       <p style="margin:0 0 10px;text-align:center;"><img src="${sig}" width="190" alt="Jonny" style="display:inline-block;width:190px;height:auto;border:0;"></p>`;
   },
@@ -141,4 +157,12 @@ const out = `<!doctype html>
 await Promise.all(jobs);
 fs.mkdirSync(path.join(root, 'email'), { recursive: true });
 fs.writeFileSync(path.join(root, 'email', `${num}.html`), out);
-console.log(`email/${num}.html written; ${jobs.length} images in public/field-notes/${num}/email/`);
+// Resend broadcast body. Add "segment_id" before posting it.
+fs.writeFileSync(path.join(root, 'email', `${num}.json`), JSON.stringify({
+  name: `Field Notes No. ${num}`,
+  from: 'Jonny Stanback <hello@jonnystanback.com>',
+  reply_to: 'hello@jonnystanback.com',
+  subject: `Field Notes No. ${num}`,
+  html: out,
+}));
+console.log(`email/${num}.html and email/${num}.json written; ${jobs.length} images in public/field-notes/${num}/email/`);
