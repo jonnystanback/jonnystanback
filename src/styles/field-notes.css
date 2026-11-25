@@ -421,6 +421,8 @@ figcaption {
   line-height: 1.5;
 }
 .fn-ask__field textarea { min-height: 13rem; resize: vertical; }
+.fn-ask__optional { font-style: normal; text-transform: none; letter-spacing: 0; opacity: 0.7; }
+.fn-ask__note { font-size: 0.8rem; line-height: 1.4; opacity: 0.7; }
 .fn-ask__field input:focus-visible,
 .fn-ask__field textarea:focus-visible { outline: 2px solid var(--fn-burgundy); outline-offset: 2px; }
 .fn-ask__send {

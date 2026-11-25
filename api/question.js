@@ -31,6 +31,9 @@ export async function POST(request) {
   if (clean(form.get('website'), 200)) return reply(200, 'Thanks!', issue);
 
   const name = clean(form.get('name'), 120);
+  // optional: lets Jonny hit Reply and write back to them
+  const email = clean(form.get('email'), 200);
+  const replyTo = /^[^\s@<>",]+@[^\s@<>",]+\.[^\s@<>",]+$/.test(email) ? email : '';
   const city = clean(form.get('city'), 120);
   const country = clean(form.get('country'), 120);
   const question = clean(form.get('question'), 4000);
@@ -52,7 +55,8 @@ export async function POST(request) {
       from: FROM,
       to: [TO],
       subject: `Field Notes ${issue || ''} question from ${name} (${where})`.replace(/\s+/g, ' '),
-      text: `${question}\n\n— ${name}, ${where}\nAsked on Field Notes No. ${issue || '?'}`,
+      text: `${question}\n\n— ${name}, ${where}${replyTo ? `\nEmail: ${replyTo} (hit Reply to answer)` : '\nNo email left, so no direct reply.'}\nAsked on Field Notes No. ${issue || '?'}`,
+      ...(replyTo && { reply_to: replyTo }),
     }),
   });
 

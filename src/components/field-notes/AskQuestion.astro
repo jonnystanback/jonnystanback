@@ -19,6 +19,11 @@ const { issue } = Astro.props;
       <input type="text" name="name" autocomplete="name" maxlength="120" required />
     </label>
     <label class="fn-ask__field">
+      <span>Email <em class="fn-ask__optional">(optional, if you’d like a reply)</em></span>
+      <input type="email" name="email" autocomplete="email" maxlength="200" aria-describedby="fn-ask-email-note" />
+      <small id="fn-ask-email-note" class="fn-ask__note">Only used to reply to you. Never shared or added to any list.</small>
+    </label>
+    <label class="fn-ask__field">
       <span>Town/City</span>
       <input type="text" name="city" autocomplete="address-level2" maxlength="120" />
     </label>
